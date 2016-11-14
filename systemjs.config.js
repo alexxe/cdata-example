@@ -12,8 +12,8 @@
         map: {
             // our app is within the app folder
             app: 'app',
-            core: 'core',
-
+            table: 'core/table',
+            cdata: 'core/cdata',
             // angular bundles
             '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
             '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
@@ -37,7 +37,11 @@
                 main: './index.js',
                 defaultExtension: 'js'
             },
-            core: {
+            table: {
+                main: './index.js',
+                defaultExtension: 'js'
+            },
+            cdata: {
                 main: './index.js',
                 defaultExtension: 'js'
             },

@@ -1,3 +1,12 @@
+<div class="row">
+    <div class="col-12">
+        <div style="float: right">
+            <!--<a href="" (click)="toggleSearch($event)" style="display: inline-block">{{isAdvancedSearch ? ('GENERAL.QUICK_SEARCH' | translate) : ('GENERAL.ADVANCED_SEARCH' | translate)}}</a>-->
+            <button md-raised-button color="primary" class="small"  (click)="search()" type="button">SEARCH</button>
+
+        </div>
+    </div>
+</div>
 <table class="table table-striped" >
     <thead>
    <!-- <tr>
@@ -19,22 +28,22 @@
     <template ngFor  let-customer [ngForOf]="data" >
         <template [ngIf]="customer.contacts.length === 0">
             <tr >
-                <td>{{customer.name}}</td>
-                <td>{{customer.email}}</td>
+                <td>{{customer.firma1}}</td>
+                <td>{{customer.firma2}}</td>
                 <td></td>
-                <td>{{customer.email}}</td>
+                <td>{{customer.customerNr}}</td>
                 <td class="text-right"></td>
-                <td>{{customer.city | uppercase}}</td>
+                <td>{{customer.ort | uppercase}}</td>
             </tr>
          </template>
         <template ngFor let-contact [ngForOf]="customer.contacts" >
             <tr >
-                <td>{{customer.name}}</td>
-                <td>{{customer.email}}</td>
-                <td>{{contact.name}}</td>
-                <td>{{customer.email}}</td>
-                <td class="text-right">{{contact.age}}</td>
-                <td>{{customer.city | uppercase}}</td>
+                <td>{{customer.firma1}}</td>
+                <td>{{customer.firma2}}</td>
+                <td>{{contact.firstName}}</td>
+                <td>{{customer.customerNr}}</td>
+                <td class="text-right">{{contact.lastName}}</td>
+                <td>{{customer.ort | uppercase}}</td>
             </tr>
         </template>
     </template>

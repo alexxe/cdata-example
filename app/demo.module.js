@@ -14,7 +14,7 @@ var platform_browser_1 = require('@angular/platform-browser');
 var common_1 = require('@angular/common');
 var http_1 = require('@angular/http');
 var demo_component_1 = require('./demo.component');
-var core_2 = require("./../core");
+var table_1 = require("./../core/table");
 var DemoModule = (function () {
     function DemoModule() {
     }
@@ -24,7 +24,7 @@ var DemoModule = (function () {
                 demo_component_1.DemoComponent
             ],
             imports: [
-                core_2.DataTableModule,
+                table_1.DataTableModule,
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
                 common_1.CommonModule,
