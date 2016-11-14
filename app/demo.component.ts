@@ -29,14 +29,15 @@ export class DemoComponent {
   }
   constructor(private http: Http) {
     this.dataTable = new DataTable<CustomerDto>();
+    this.dataTable.data = [];
 
-    /*http.get("app/data.json")
-        .subscribe((data)=> {
-          setTimeout(()=> {
-
-            this.dataTable.data = data.json();
-          }, 1000);
-        });*/
+    // http.get("app/data.json")
+    //     .subscribe((data)=> {
+    //       setTimeout(()=> {
+    //
+    //         this.dataTable.data = data.json();
+    //       }, 1000);
+    //     });
   }
 
   private sortByWordLength = (a: any) => {
@@ -133,12 +134,20 @@ export class DemoComponent {
     return customerFilter;
   }
 
-  getData(query: any): Observable<any> {
+  getData(query: any): Observable<CustomerDto[]> {
     let body = JSON.stringify(query);
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     let post = this.http.post(this.url, body, options);
-    let result = post.mergeMap((res) => this.dataTable.data = res.json());
+    let result = post.mergeMap(
+        (res) => {
+          let data = res.json().data || [];
+          data.forEach((d) => {
+            d.timestamp = new Date(d.timestamp);
+          });
+          return data;
+        }
+    );
     return result;
   }
 }

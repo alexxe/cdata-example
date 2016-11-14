@@ -28,6 +28,7 @@
     <template ngFor  let-customer [ngForOf]="data" >
         <template [ngIf]="customer.contacts.length === 0">
             <tr >
+                <td>{{customer.$type}}</td>
                 <td>{{customer.firma1}}</td>
                 <td>{{customer.firma2}}</td>
                 <td></td>
