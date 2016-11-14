@@ -20,20 +20,25 @@ export interface DataEvent {
     selector: 'table[mfData]',
     exportAs: 'mfDataTable'
 })
-export class DataTable implements OnChanges, DoCheck {
-
-    @Input("mfData") public inputData: any[] = [];
+export class DataTable<T> implements OnChanges, DoCheck {
+    constructor(){
+        this.data = [];
+    }
+    //@Input("mfData") public inputData: any[] = [];
+    public inputData: any[] = [];
 
     private sortBy: string|string[] = "";
     private sortOrder = "asc";
 
 
-    @Input("mfRowsOnPage") public rowsOnPage = 1000;
-    @Input("mfActivePage") public activePage = 1;
+    //@Input("mfRowsOnPage") public rowsOnPage = 1000;
+    //@Input("mfActivePage") public activePage = 1;
+    public rowsOnPage = 1000;
+    public activePage = 1;
 
     private mustRecalculateData = false;
 
-    public data: any[];
+    public data: Array<T>;
 
     public onDataChange = new EventEmitter<DataEvent>();
     public onSortChange = new EventEmitter<SortEvent>();

@@ -11,14 +11,15 @@ export interface PageEvent {
 export interface DataEvent {
     length: number;
 }
-export declare class DataTable implements OnChanges, DoCheck {
+export declare class DataTable<T> implements OnChanges, DoCheck {
+    constructor();
     inputData: any[];
     private sortBy;
     private sortOrder;
     rowsOnPage: number;
     activePage: number;
     private mustRecalculateData;
-    data: any[];
+    data: Array<T>;
     onDataChange: EventEmitter<DataEvent>;
     onSortChange: EventEmitter<SortEvent>;
     onPageChange: EventEmitter<PageEvent>;

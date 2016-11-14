@@ -50,9 +50,9 @@ import * as _ from "lodash";
     </mfPaginator>
     `
 })
-export class BootstrapPaginator implements OnChanges {
+export class BootstrapPaginator<T> implements OnChanges {
     @Input("rowsOnPageSet") private rowsOnPageSet = [];
-    @Input("mfTable") private mfTable: DataTable;
+    @Input("mfTable") private mfTable: DataTable<T>;
 
     private minRowsOnPage = 0;
 

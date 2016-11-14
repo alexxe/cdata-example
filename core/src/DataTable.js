@@ -12,15 +12,19 @@ var core_1 = require("@angular/core");
 var _ = require("lodash");
 var DataTable = (function () {
     function DataTable() {
+        //@Input("mfData") public inputData: any[] = [];
         this.inputData = [];
         this.sortBy = "";
         this.sortOrder = "asc";
+        //@Input("mfRowsOnPage") public rowsOnPage = 1000;
+        //@Input("mfActivePage") public activePage = 1;
         this.rowsOnPage = 1000;
         this.activePage = 1;
         this.mustRecalculateData = false;
         this.onDataChange = new core_1.EventEmitter();
         this.onSortChange = new core_1.EventEmitter();
         this.onPageChange = new core_1.EventEmitter();
+        this.data = [];
     }
     DataTable.prototype.getSort = function () {
         return { sortBy: this.sortBy, sortOrder: this.sortOrder };
@@ -104,18 +108,6 @@ var DataTable = (function () {
             return value;
         };
     };
-    __decorate([
-        core_1.Input("mfData"), 
-        __metadata('design:type', Array)
-    ], DataTable.prototype, "inputData", void 0);
-    __decorate([
-        core_1.Input("mfRowsOnPage"), 
-        __metadata('design:type', Object)
-    ], DataTable.prototype, "rowsOnPage", void 0);
-    __decorate([
-        core_1.Input("mfActivePage"), 
-        __metadata('design:type', Object)
-    ], DataTable.prototype, "activePage", void 0);
     DataTable = __decorate([
         core_1.Directive({
             selector: 'table[mfData]',

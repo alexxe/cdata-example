@@ -1,5 +1,5 @@
 import { OnChanges } from "@angular/core";
-export declare class BootstrapPaginator implements OnChanges {
+export declare class BootstrapPaginator<T> implements OnChanges {
     private rowsOnPageSet;
     private mfTable;
     private minRowsOnPage;

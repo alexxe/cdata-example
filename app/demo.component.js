@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require("@angular/http");
-var _ = require("lodash");
+var DataTable_1 = require("../core/src/DataTable");
 var DemoComponent = (function () {
     function DemoComponent(http) {
         var _this = this;
@@ -18,21 +18,34 @@ var DemoComponent = (function () {
         this.sortByWordLength = function (a) {
             return a.name.length;
         };
+        this.dataTable = new DataTable_1.DataTable();
         http.get("app/data.json")
             .subscribe(function (data) {
             setTimeout(function () {
-                _this.data = data.json();
+                _this.dataTable.data = data.json();
             }, 1000);
         });
     }
+    Object.defineProperty(DemoComponent.prototype, "data", {
+        get: function () {
+            return this.dataTable.data;
+        },
+        enumerable: true,
+        configurable: true
+    });
     DemoComponent.prototype.removeItem = function (item) {
-        this.data = _.filter(this.data, function (elem) { return elem != item; });
+        //this.data = _.filter(this.data, (elem)=>elem != item);
         console.log("Remove: ", item.email);
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DemoComponent.prototype, "data", null);
     DemoComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            templateUrl: './app/demo.component.html'
+            templateUrl: './app/demo.component.html',
+            providers: [DataTable_1.DataTable]
         }), 
         __metadata('design:paramtypes', [http_1.Http])
     ], DemoComponent);

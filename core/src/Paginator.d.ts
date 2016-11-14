@@ -1,6 +1,6 @@
 import { SimpleChange, OnChanges } from "@angular/core";
 import { DataTable } from "./DataTable";
-export declare class Paginator implements OnChanges {
+export declare class Paginator<T> implements OnChanges {
     private injectMfTable;
     private inputMfTable;
     private mfTable;
@@ -8,7 +8,7 @@ export declare class Paginator implements OnChanges {
     rowsOnPage: number;
     dataLength: number;
     lastPage: number;
-    constructor(injectMfTable: DataTable);
+    constructor(injectMfTable: DataTable<T>);
     ngOnChanges(changes: {
         [key: string]: SimpleChange;
     }): any;

@@ -5,19 +5,19 @@ import {DataTable, PageEvent} from "./DataTable";
     selector: "mfPaginator",
     template: `<ng-content></ng-content>`
 })
-export class Paginator implements OnChanges {
+export class Paginator<T> implements OnChanges {
 
     @Input("mfTable")
-    private inputMfTable:DataTable;
+    private inputMfTable:DataTable<T>;
 
-    private mfTable:DataTable;
+    private mfTable:DataTable<T>;
 
     public activePage:number;
     public rowsOnPage:number;
     public dataLength:number = 0;
     public lastPage:number;
 
-    public constructor(@Optional() private injectMfTable:DataTable) {
+    public constructor(@Optional() private injectMfTable:DataTable<T>) {
     }
 
     public ngOnChanges(changes:{[key:string]:SimpleChange}):any {

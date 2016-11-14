@@ -10,14 +10,14 @@ import {DataTable, SortEvent} from "./DataTable";
             <span *ngIf="isSortedByMeDesc" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
         </a>`
 })
-export class DefaultSorter {
+export class DefaultSorter<T> {
     @Input("by") private sortBy: string;
 
 
     private isSortedByMeAsc: boolean = false;
     private isSortedByMeDesc: boolean = false;
 
-    public constructor(private mfTable: DataTable) {
+    public constructor(private mfTable: DataTable<T>) {
         mfTable.onSortChange.subscribe((event:SortEvent) => {
             this.isSortedByMeAsc = (event.sortBy === this.sortBy && event.sortOrder === "asc");
             this.isSortedByMeDesc = (event.sortBy === this.sortBy && event.sortOrder === "desc");
