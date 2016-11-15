@@ -4,19 +4,13 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {Http} from "@angular/http";
-import {DataTable} from "../core/table/src/DataTable";
-import {CustomerDto} from "./model/CustomerDto";
-import {ICustomerDtoDescriptor} from "./model/ICustomerDtoDescriptor";
-import {CQuery} from "../core/cdata/src/CQuery";
 import {CustomerViewModel} from "./CustomerViewModel";
-import {DataModel} from "../core/cdata/src/DataModel";
-import {CustomerModel} from "./model/CustomerModel";
+import {CustomerModel} from "./CustomerModel";
 
 
 @Component({
   selector: 'my-app',
-  templateUrl: './app/demo.component.html',
-  providers:[DataTable]
+  templateUrl: './app/demo.component.html'
 
 })
 export class DemoComponent {

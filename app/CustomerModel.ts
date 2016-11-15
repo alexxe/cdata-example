@@ -1,10 +1,10 @@
-import {DataModel} from "../../core/cdata/src/DataModel";
+import {DataModel} from "../core/cdata/src/DataModel";
 import {Http} from "@angular/http";
-import {CustomerDto} from "./CustomerDto";
-import {ICustomerDtoDescriptor} from "./ICustomerDtoDescriptor";
-import {StringMethods, Methods} from "../../core/cdata/src/CQueryDescriptor";
-import {IContactDtoDescriptor} from "./IContactDtoDescriptor";
-import {CustomerViewModel} from "../CustomerViewModel";
+import {CustomerDto} from "./model/CustomerDto";
+import {ICustomerDtoDescriptor} from "./model/ICustomerDtoDescriptor";
+import {StringMethods, Methods} from "../core/cdata/src/CQueryDescriptor";
+import {IContactDtoDescriptor} from "./model/IContactDtoDescriptor";
+import {CustomerViewModel} from "./CustomerViewModel";
 
 export class CustomerModel extends DataModel<CustomerDto,ICustomerDtoDescriptor>{
     constructor(http: Http,url:string) {
@@ -17,6 +17,7 @@ export class CustomerModel extends DataModel<CustomerDto,ICustomerDtoDescriptor>
     private contactFilters:IContactDtoDescriptor[];
 
     applyFilters() {
+        this.filterDescriptors = this.customerFilters;
         if (this.contactFilters.length > 0) {
             this.filterDescriptors.push({
                 contacts: {
@@ -26,7 +27,7 @@ export class CustomerModel extends DataModel<CustomerDto,ICustomerDtoDescriptor>
             });
         }
 
-        this.filterDescriptors = this.customerFilters;
+
     }
 
     addCustomerFilter(filter:ICustomerDtoDescriptor) {
