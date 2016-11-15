@@ -1,12 +1,55 @@
-<div class="row">
-    <div class="col-12">
-        <div style="float: right">
-            <!--<a href="" (click)="toggleSearch($event)" style="display: inline-block">{{isAdvancedSearch ? ('GENERAL.QUICK_SEARCH' | translate) : ('GENERAL.ADVANCED_SEARCH' | translate)}}</a>-->
-            <button md-raised-button color="primary" class="small"  (click)="search()" type="button">SEARCH</button>
-
+<div >
+    <!--<form name="filterForm" (ngSubmit)="refresh()">-->
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="group">
+                    <label for="firma1" class="col-3">firma1</label>
+                    <div class="col-9">
+                        <input type="text" id="firma1" [(ngModel)]="viewModel.filter['firma1']"
+                               name="firma1">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="group">
+                    <label for="firma2" class="col-3">firma2</label>
+                    <div class="col-9">
+                        <input type="text" id="firma2"  [(ngModel)]="viewModel.filter['firma2']"
+                               name="firma2">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="group">
+                    <label for="firstName" class="col-3">firstName</label>
+                    <div class="col-9">
+                        <input type="text" id="firstName" [(ngModel)]="viewModel.filter['firstName']"
+                               name="firstName">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="group">
+                    <label for="lastName" class="col-3">lastName</label>
+                    <div class="col-9">
+                        <input type="text" id="lastName" [(ngModel)]="viewModel.filter['lastName']"
+                               name="lastName">
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-12">
+                <div style="float: right">
+                    <button md-raised-button color="primary" class="small" (click)="refresh()"  type="button">SEARCH</button>
+
+                </div>
+            </div>
+        </div>
+    <!--</form>-->
 </div>
+
+
 <table class="table table-striped" >
     <thead>
    <!-- <tr>
@@ -25,26 +68,26 @@
     </tr>-->
     </thead>
     <tbody>
-    <template ngFor  let-customer [ngForOf]="data" >
+    <template ngFor  let-customer [ngForOf]="dataModel.data" >
         <template [ngIf]="customer.contacts.length === 0">
             <tr >
-                <td>{{customer.$type}}</td>
                 <td>{{customer.firma1}}</td>
                 <td>{{customer.firma2}}</td>
-                <td></td>
-                <td>{{customer.customerNr}}</td>
-                <td class="text-right"></td>
+                <td>{{customer.edvNr}}</td>
                 <td>{{customer.ort | uppercase}}</td>
+                <td></td>
+                <td></td>
             </tr>
          </template>
         <template ngFor let-contact [ngForOf]="customer.contacts" >
             <tr >
                 <td>{{customer.firma1}}</td>
                 <td>{{customer.firma2}}</td>
-                <td>{{contact.firstName}}</td>
-                <td>{{customer.customerNr}}</td>
-                <td class="text-right">{{contact.lastName}}</td>
+                <td>{{customer.edvNr}}</td>
                 <td>{{customer.ort | uppercase}}</td>
+                <td>{{contact.firstName}}</td>
+                <td>{{contact.lastName}}</td>
+
             </tr>
         </template>
     </template>

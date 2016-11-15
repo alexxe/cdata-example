@@ -14,20 +14,13 @@
 
 
     export interface IContactDtoDescriptor extends IFilterDescriptor {
-        
-        // ID
-        id?: IOperator<string> | IInOperator<string>;
-        // EDVNR
-        edvNr?: IOperator<string> | IInOperator<string>;
-        // FIRSTNAME
+
+        id?: IOperator<number> | IInOperator<number>;
+        edvNr?: IOperator<number> | IInOperator<number>;
         firstName?: IOperator<string> | IInOperator<string>;
-        // LASTNAME
         lastName?: IOperator<string> | IInOperator<string>;
-        // STREET
         street?: IOperator<string> | IInOperator<string>;
-        // ORT
         ort?: IOperator<string> | IInOperator<string>;
-        // CUSTOMER
         customer?: ICustomerDtoDescriptor;
-        
-    } 
+
+    }

@@ -9,26 +9,15 @@
     // More info: http://frhagn.github.io/Typewriter/
     import {IFilterDescriptor, IOperator, IInOperator, IMethod} from "../../core/cdata/src/CQuery";
     import {IContactDtoDescriptor} from "./IContactDtoDescriptor";
-    
+
     export interface ICustomerDtoDescriptor extends IFilterDescriptor {
-        
-        // ID
-        id?: IOperator<string> | IInOperator<string>;
-        // EDVNR
-        edvNr?: IOperator<string> | IInOperator<string>;
-        // CUSTOMERNR
-        customerNr?: IOperator<string> | IInOperator<string>;
-        // FIRMA1
+
+        id?: IOperator<number> | IInOperator<number>;
+        edvNr?: IOperator<number> | IInOperator<number>;
         firma1?: IOperator<string> | IInOperator<string>;
-        // FIRMA2
         firma2?: IOperator<string> | IInOperator<string>;
-        // SHORTNAME
-        shortName?: IOperator<string> | IInOperator<string>;
-        // STREET
         street?: IOperator<string> | IInOperator<string>;
-        // ORT
         ort?: IOperator<string> | IInOperator<string>;
-        // CONTACTS
         contacts?: IMethod<IContactDtoDescriptor>;
-        
-    } 
+
+    }
