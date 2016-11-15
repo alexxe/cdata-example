@@ -26,6 +26,9 @@ export class CustomerModel extends DataModel<CustomerDto,ICustomerDtoDescriptor>
                 }
             });
         }
+        else {
+            this.addInclude(x => x.contacts);
+        }
 
 
     }
@@ -38,5 +41,10 @@ export class CustomerModel extends DataModel<CustomerDto,ICustomerDtoDescriptor>
         this.contactFilters.push(filter);
     }
 
+    protected resetModel() {
+        this.customerFilters = [];
+        this.contactFilters = [];
+        super.resetModel();
+    }
 
 }

@@ -2,6 +2,7 @@
 
 import {IModel} from "./../index";
 import  * as Descriptor from "./CQueryDescriptor";
+import {Methods} from "./CQueryDescriptor";
 
 export class Projector<T extends IModel> {
     projections: Array<Binding>;
@@ -44,7 +45,7 @@ export class Binding {
     export class CQuery<T extends IFilterDescriptor> {
         private WhereNode: Descriptor.CallNode;
         private descriptor: Descriptor.CQueryDescriptor;
-        constructor(model: IModel,filters: T[],projections?:Binding[]) {
+        constructor(model: IModel,filters: T[],projections?:Binding[],includes?:string[]) {
             this.descriptor = new Descriptor.CQueryDescriptor(model);
             for (var i = 0; i < filters.length; i++) {
                 this.buildFilter(filters[i], "");
@@ -53,10 +54,20 @@ export class Binding {
             if(projections != null) {
                 this.buildProjection(projections);
             }
+
+            if(includes.length > 0) {
+                this.buildIncludes(includes);
+            }
             
         }
 
-        buildProjection(bindings: Binding[]) {
+        private buildIncludes(includes:string[]) {
+            for (var i = 0; i < includes.length; i++) {
+                this.descriptor.IncludeParameters.push(new Descriptor.MemberNode(includes[i]));
+            }
+        }
+
+        private buildProjection(bindings: Binding[]) {
             var node = new Descriptor.ProjectorNode();
             node.Bindings = bindings;
             node.Left = this.descriptor.Root;
@@ -75,11 +86,8 @@ export class Binding {
                 let operator = <IOperator<any>>value;
                 let method = <IMethod<any>>value;
                 if (method.method != null) {
-                    //let track = new Tracker();
-                    //track.path = path + "." + property;
-                    //track.operator = method.method;
-                    //track.value = method.filter;
-                    //this.tracker.push(track);
+                    this.addMethod(method.method);
+                    this.buildFilter(method.value.descriptor,"");
                 }
                 else if (operator.value == null) {
                     let member = "";
@@ -145,6 +153,11 @@ export class Binding {
 
         }
 
+        private addMethod(method:Methods) {
+            if(method === Methods.Any) {
+
+            }
+        }
         private addMethodWhere(logicOp: Descriptor.BinaryOperator, member: string, method: Descriptor.Methods | Descriptor.StringMethods, value: any) {
             let methodName;
             if (Descriptor.StringMethods[method] !== undefined) {
@@ -185,7 +198,7 @@ export class Binding {
     }
 
     export interface IFilterDescriptor {
-
+        
     }
 
     export interface IOperator<T> {

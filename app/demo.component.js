@@ -14,9 +14,8 @@ require('rxjs/add/operator/mergeMap');
 require('rxjs/add/operator/catch');
 require('rxjs/add/observable/throw');
 var http_1 = require("@angular/http");
-var DataTable_1 = require("../core/table/src/DataTable");
 var CustomerViewModel_1 = require("./CustomerViewModel");
-var CustomerModel_1 = require("./model/CustomerModel");
+var CustomerModel_1 = require("./CustomerModel");
 var DemoComponent = (function () {
     function DemoComponent(http) {
         this.http = http;
@@ -53,8 +52,7 @@ var DemoComponent = (function () {
     DemoComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            templateUrl: './app/demo.component.html',
-            providers: [DataTable_1.DataTable]
+            templateUrl: './app/demo.component.html'
         }), 
         __metadata('design:paramtypes', [http_1.Http])
     ], DemoComponent);

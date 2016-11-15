@@ -5,3 +5,6 @@
 # IntelliJ project files
 .idea/workspace.xml
 node_modules/
+/.idea/typescript-compiler.xml
+.idea/inspectionProfiles/
+
