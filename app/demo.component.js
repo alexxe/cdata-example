@@ -30,7 +30,7 @@ let DemoComponent = class DemoComponent {
         return this.viewModel.filter;
     }
     refresh() {
-        this.dataModel.applyFilters();
+        this.viewModel.applyFilterState();
         this.dataModel.refresh();
     }
 };

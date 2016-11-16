@@ -8,16 +8,19 @@ export abstract class ViewModel<TM extends IModel,TD extends IFilterDescriptor> 
     constructor(protected model:DataModel<TM,TD>) {
         this.filter = {};
         this.filterMap = new Map();
+        this.initFilterMap();
     }
+    protected abstract initFilterMap();
 
-    protected abstract addFilter(property:any,value:any);
 
     applyFilterState(){
         let filters = Object.getOwnPropertyNames(this.filter);
         for (let i = 0; i < filters.length; i++) {
             let property = filters[i];
             let value = this.filter[property];
-            this.addFilter(property,value);
+            let f = this.filterMap.get(property);
+            f.call(this.model,value);
+            //this.addFilter(property,value);
         }
     }
 

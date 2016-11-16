@@ -34,7 +34,7 @@ export class DemoComponent {
   }
 
   public refresh() {
-    this.dataModel.applyFilters();
+    this.viewModel.applyFilterState();
     this.dataModel.refresh();
   }
 

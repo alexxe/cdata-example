@@ -11,30 +11,15 @@ import {NodeType, QNode, MethodType, BinaryType} from "../core/cdata/src/QNode";
 export class CustomerViewModel extends ViewModel<CustomerDto,ICustomerDtoDescriptor> {
     constructor(model:CustomerModel) {
         super(model);
-        let f :Function = model.addCustomerFilter(x => x.firma1,BinaryType.Contains, 0);
-        this.filterMap.set("firma1",f);
+
     }
 
-
-    addFilter(property:string,value:any) {
+    initFilterMap() {
         let customerModel = <CustomerModel>this.model;
-        if (property === "firma1") {
-            let f = this.filterMap.get("firma1");
-            f.call(value);
-            customerModel.addCustomerFilter(x => x.firma1,BinaryType.Contains, value);
-        }
-
-        if (property === "firma2") {
-            customerModel.addCustomerFilter(x => x.firma2,BinaryType.Contains, value);
-        }
-
-        if (property === "firstName") {
-            customerModel.addContactFilter(x => x.firstName,BinaryType.Contains, value);
-        }
-
-        if (property === "lastName") {
-            customerModel.addContactFilter(x => x.lastName,BinaryType.Contains, value);
-        }
+        this.filterMap.set("firma1",(value:any) => customerModel.addCustomerFilter(x => x.firma1,BinaryType.Contains, value));
+        this.filterMap.set("firma2",(value:any) => customerModel.addCustomerFilter(x => x.firma2,BinaryType.Contains, value));
+        this.filterMap.set("firstName",(value:any) => customerModel.addContactFilter(x => x.firstName,BinaryType.Contains, value));
+        this.filterMap.set("lastName",(value:any) => customerModel.addContactFilter(x => x.lastName,BinaryType.Contains, value));
     }
 
     sort(property:string) {
