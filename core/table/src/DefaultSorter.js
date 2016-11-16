@@ -8,39 +8,42 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var DataTable_1 = require("./DataTable");
-var DefaultSorter = (function () {
-    function DefaultSorter(mfTable) {
-        var _this = this;
+const core_1 = require("@angular/core");
+const DataTable_1 = require("./DataTable");
+let DefaultSorter = class DefaultSorter {
+    constructor(mfTable) {
         this.mfTable = mfTable;
         this.isSortedByMeAsc = false;
         this.isSortedByMeDesc = false;
-        mfTable.onSortChange.subscribe(function (event) {
-            _this.isSortedByMeAsc = (event.sortBy === _this.sortBy && event.sortOrder === "asc");
-            _this.isSortedByMeDesc = (event.sortBy === _this.sortBy && event.sortOrder === "desc");
+        mfTable.onSortChange.subscribe((event) => {
+            this.isSortedByMeAsc = (event.sortBy === this.sortBy && event.sortOrder === "asc");
+            this.isSortedByMeDesc = (event.sortBy === this.sortBy && event.sortOrder === "desc");
         });
     }
-    DefaultSorter.prototype.sort = function () {
+    sort() {
         if (this.isSortedByMeAsc) {
             this.mfTable.setSort(this.sortBy, "desc");
         }
         else {
             this.mfTable.setSort(this.sortBy, "asc");
         }
-    };
-    __decorate([
-        core_1.Input("by"), 
-        __metadata('design:type', String)
-    ], DefaultSorter.prototype, "sortBy", void 0);
-    DefaultSorter = __decorate([
-        core_1.Component({
-            selector: "mfDefaultSorter",
-            template: "\n        <a style=\"cursor: pointer\" (click)=\"sort()\" class=\"text-nowrap\">\n            <ng-content></ng-content>\n            <span *ngIf=\"isSortedByMeAsc\" class=\"glyphicon glyphicon-triangle-top\" aria-hidden=\"true\"></span>\n            <span *ngIf=\"isSortedByMeDesc\" class=\"glyphicon glyphicon-triangle-bottom\" aria-hidden=\"true\"></span>\n        </a>"
-        }), 
-        __metadata('design:paramtypes', [DataTable_1.DataTable])
-    ], DefaultSorter);
-    return DefaultSorter;
-}());
+    }
+};
+__decorate([
+    core_1.Input("by"), 
+    __metadata('design:type', String)
+], DefaultSorter.prototype, "sortBy", void 0);
+DefaultSorter = __decorate([
+    core_1.Component({
+        selector: "mfDefaultSorter",
+        template: `
+        <a style="cursor: pointer" (click)="sort()" class="text-nowrap">
+            <ng-content></ng-content>
+            <span *ngIf="isSortedByMeAsc" class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+            <span *ngIf="isSortedByMeDesc" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+        </a>`
+    }), 
+    __metadata('design:paramtypes', [DataTable_1.DataTable])
+], DefaultSorter);
 exports.DefaultSorter = DefaultSorter;
 //# sourceMappingURL=DefaultSorter.js.map

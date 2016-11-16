@@ -8,35 +8,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var forms_1 = require('@angular/forms');
-var platform_browser_1 = require('@angular/platform-browser');
-var common_1 = require('@angular/common');
-var http_1 = require('@angular/http');
-var demo_component_1 = require('./demo.component');
-var table_1 = require("./../core/table");
-var DemoModule = (function () {
-    function DemoModule() {
-    }
-    DemoModule = __decorate([
-        core_1.NgModule({
-            declarations: [
-                demo_component_1.DemoComponent
-            ],
-            imports: [
-                table_1.DataTableModule,
-                platform_browser_1.BrowserModule,
-                forms_1.FormsModule,
-                common_1.CommonModule,
-                http_1.HttpModule,
-                http_1.JsonpModule
-            ],
-            providers: [],
-            bootstrap: [demo_component_1.DemoComponent]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], DemoModule);
-    return DemoModule;
-}());
+const core_1 = require('@angular/core');
+const forms_1 = require('@angular/forms');
+const platform_browser_1 = require('@angular/platform-browser');
+const common_1 = require('@angular/common');
+const http_1 = require('@angular/http');
+const demo_component_1 = require('./demo.component');
+const table_1 = require("./../core/table");
+let DemoModule = class DemoModule {
+};
+DemoModule = __decorate([
+    core_1.NgModule({
+        declarations: [
+            demo_component_1.DemoComponent
+        ],
+        imports: [
+            table_1.DataTableModule,
+            platform_browser_1.BrowserModule,
+            forms_1.FormsModule,
+            common_1.CommonModule,
+            http_1.HttpModule,
+            http_1.JsonpModule
+        ],
+        providers: [],
+        bootstrap: [demo_component_1.DemoComponent]
+    }), 
+    __metadata('design:paramtypes', [])
+], DemoModule);
 exports.DemoModule = DemoModule;
 //# sourceMappingURL=demo.module.js.map

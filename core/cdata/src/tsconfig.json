@@ -2,7 +2,7 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "removeComments": true,
@@ -11,7 +11,7 @@
     "types" : ["node", "lodash"],
     "lib": [
       "dom",
-      "es2015"
+      "es6"
     ]
   },
   "angularCompilerOptions": {

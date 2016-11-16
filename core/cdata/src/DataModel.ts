@@ -5,24 +5,31 @@ import {IModel} from "./IModel";
 import {CQueryDescriptor, CompareOperator, StringMethods} from "./CQueryDescriptor";
 import {IFilterDescriptor, CQuery} from "./CQuery";
 import {ViewModel} from "./ViewModel";
+import {DescriptorVisitor} from "./DescriptorVisitor";
+import {QNode, NodeType} from "./QNode";
 
 
 export abstract class DataModel<TM extends IModel,TD extends IFilterDescriptor> {
     constructor(private http: Http,private url:string,private model:TM) {
         this.filterDescriptors = [];
         this.includes = [];
+        this.queryable = {
+            Type:NodeType.Querable,
+            Value:model.constructor.name
+        };
     }
+    protected queryable:QNode;
     protected filterDescriptors: TD[];
     private includes: string[];
     public data:TM[];
 
 
-    abstract applyFilters();
+    abstract applyFilters() : QNode;
+
 
     refresh() {
-        this.applyFilters();
-        let query = new CQuery<TD>(this.model, this.filterDescriptors,null,this.includes);
-        this.getData(query.getDescriptor());
+        let query = this.applyFilters();
+        this.getData(query);
         this.resetModel();
     }
 
@@ -35,11 +42,9 @@ export abstract class DataModel<TM extends IModel,TD extends IFilterDescriptor> 
         this.includes.push(this.convertLambdaToPath(f.toString()));
     }
 
-    public addFilter(path: (x:TM) => any,op:CompareOperator | StringMethods,value:any) {
 
-    }
 
-    private getData(query: CQueryDescriptor) {
+    private getData(query: QNode) {
         this.post(query).subscribe(
             res => {
                 let mapped = [];
@@ -48,7 +53,7 @@ export abstract class DataModel<TM extends IModel,TD extends IFilterDescriptor> 
             });
     }
 
-    private post(query: CQueryDescriptor) : Observable<TM[]> {
+    private post(query: QNode) : Observable<TM[]> {
         let body = JSON.stringify(query);
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
@@ -56,7 +61,7 @@ export abstract class DataModel<TM extends IModel,TD extends IFilterDescriptor> 
         map(res => <TM[]>res.json());
     }
 
-    private convertLambdaToPath(lambda:string) : string {
+    protected convertLambdaToPath(lambda:any) : string {
         let p = lambda.toString().split('.');
         var path;
         for (var i = 1; i < p.length; i++) {

@@ -8,10 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var _ = require("lodash");
-var DataTable = (function () {
-    function DataTable() {
+const core_1 = require("@angular/core");
+const _ = require("lodash");
+let DataTable = class DataTable {
+    constructor() {
         //@Input("mfData") public inputData: any[] = [];
         this.inputData = [];
         this.sortBy = "";
@@ -26,21 +26,21 @@ var DataTable = (function () {
         this.onPageChange = new core_1.EventEmitter();
         this.data = [];
     }
-    DataTable.prototype.getSort = function () {
+    getSort() {
         return { sortBy: this.sortBy, sortOrder: this.sortOrder };
-    };
-    DataTable.prototype.setSort = function (sortBy, sortOrder) {
+    }
+    setSort(sortBy, sortOrder) {
         if (this.sortBy !== sortBy || this.sortOrder !== sortOrder) {
             this.sortBy = sortBy;
             this.sortOrder = sortOrder;
             this.mustRecalculateData = true;
             this.onSortChange.emit({ sortBy: sortBy, sortOrder: sortOrder });
         }
-    };
-    DataTable.prototype.getPage = function () {
+    }
+    getPage() {
         return { activePage: this.activePage, rowsOnPage: this.rowsOnPage, dataLength: this.inputData.length };
-    };
-    DataTable.prototype.setPage = function (activePage, rowsOnPage) {
+    }
+    setPage(activePage, rowsOnPage) {
         if (this.rowsOnPage !== rowsOnPage || this.activePage !== activePage) {
             this.activePage = this.activePage !== activePage ? activePage : this.calculateNewActivePage(this.rowsOnPage, rowsOnPage);
             this.rowsOnPage = rowsOnPage;
@@ -51,18 +51,18 @@ var DataTable = (function () {
                 dataLength: this.inputData.length
             });
         }
-    };
-    DataTable.prototype.calculateNewActivePage = function (previousRowsOnPage, currentRowsOnPage) {
-        var firstRowOnPage = (this.activePage - 1) * previousRowsOnPage + 1;
-        var newActivePage = Math.ceil(firstRowOnPage / currentRowsOnPage);
+    }
+    calculateNewActivePage(previousRowsOnPage, currentRowsOnPage) {
+        let firstRowOnPage = (this.activePage - 1) * previousRowsOnPage + 1;
+        let newActivePage = Math.ceil(firstRowOnPage / currentRowsOnPage);
         return newActivePage;
-    };
-    DataTable.prototype.recalculatePage = function () {
-        var lastPage = Math.ceil(this.inputData.length / this.rowsOnPage);
+    }
+    recalculatePage() {
+        let lastPage = Math.ceil(this.inputData.length / this.rowsOnPage);
         this.activePage = lastPage < this.activePage ? lastPage : this.activePage;
         this.activePage = this.activePage || 1;
-    };
-    DataTable.prototype.ngOnChanges = function (changes) {
+    }
+    ngOnChanges(changes) {
         if (changes["inputData"]) {
             this.inputData = changes["inputData"].currentValue || [];
             this.recalculatePage();
@@ -73,18 +73,18 @@ var DataTable = (function () {
             });
             this.mustRecalculateData = true;
         }
-    };
-    DataTable.prototype.ngDoCheck = function () {
+    }
+    ngDoCheck() {
         if (this.mustRecalculateData) {
             this.fillData();
             this.mustRecalculateData = false;
         }
-    };
-    DataTable.prototype.fillData = function () {
+    }
+    fillData() {
         this.activePage = this.activePage;
         this.rowsOnPage = this.rowsOnPage;
-        var offset = (this.activePage - 1) * this.rowsOnPage;
-        var data = this.inputData;
+        let offset = (this.activePage - 1) * this.rowsOnPage;
+        let data = this.inputData;
         var sortBy = this.sortBy;
         if (typeof sortBy === 'string' || sortBy instanceof String) {
             data = _.orderBy(data, this.caseInsensitiveIteratee(sortBy), [this.sortOrder]);
@@ -94,12 +94,11 @@ var DataTable = (function () {
         }
         data = _.slice(data, offset, offset + this.rowsOnPage);
         this.data = data;
-    };
-    DataTable.prototype.caseInsensitiveIteratee = function (sortBy) {
-        return function (row) {
+    }
+    caseInsensitiveIteratee(sortBy) {
+        return (row) => {
             var value = row;
-            for (var _i = 0, _a = sortBy.split('.'); _i < _a.length; _i++) {
-                var sortByProperty = _a[_i];
+            for (let sortByProperty of sortBy.split('.')) {
                 value = value[sortByProperty];
             }
             if (value && typeof value === 'string' || value instanceof String) {
@@ -107,15 +106,14 @@ var DataTable = (function () {
             }
             return value;
         };
-    };
-    DataTable = __decorate([
-        core_1.Directive({
-            selector: 'table[mfData]',
-            exportAs: 'mfDataTable'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], DataTable);
-    return DataTable;
-}());
+    }
+};
+DataTable = __decorate([
+    core_1.Directive({
+        selector: 'table[mfData]',
+        exportAs: 'mfDataTable'
+    }), 
+    __metadata('design:paramtypes', [])
+], DataTable);
 exports.DataTable = DataTable;
 //# sourceMappingURL=DataTable.js.map

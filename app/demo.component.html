@@ -51,21 +51,18 @@
 
 
 <table class="table table-striped" >
-    <thead>
-   <!-- <tr>
-        <th style="width: 20%">
-            <mfDefaultSorter by="name">Name</mfDefaultSorter>
+    <thead class="blue">
+    <tr>
+        <th (click)="viewModel.sort('Id')">ID <span [class.sortAz]="viewModel.isSortedByAscending('Id')"
+                                                [class.sortZa]="viewModel.isSortedByDescending('Id')"></span>
         </th>
-        <th style="width: 50%">
-            <mfDefaultSorter by="email">Email</mfDefaultSorter>
-        </th>
-        <th style="width: 10%">
-            <mfDefaultSorter by="age">Age</mfDefaultSorter>
-        </th>
-        <th style="width: 20%">
-            <mfDefaultSorter by="city">City</mfDefaultSorter>
-        </th>
-    </tr>-->
+        <th (click)="viewModel.sort('Name')">GENERAL.NAME <span
+                [class.sortAz]="viewModel.isSortedByAscending('Name')"
+                [class.sortZa]="viewModel.isSortedByDescending('Name')"></span></th>
+        <th (click)="viewModel.sort('Description')">GENERAL.DESCRIPTION <span
+                [class.sortAz]="viewModel.isSortedByAscending('Description')"
+                [class.sortZa]="viewModel.isSortedByDescending('Description')"></span></th>
+    </tr>
     </thead>
     <tbody>
     <template ngFor  let-customer [ngForOf]="dataModel.data" >

@@ -6,111 +6,60 @@ import {CustomerDto} from "./model/CustomerDto";
 import {CustomerModel} from "./CustomerModel";
 import {IFilterDescriptor} from "../core/cdata/src/CQuery";
 import {DescriptorVisitor} from "../core/cdata/src/DescriptorVisitor";
+import {NodeType, QNode, MethodType, BinaryType} from "../core/cdata/src/QNode";
 
 export class CustomerViewModel extends ViewModel<CustomerDto,ICustomerDtoDescriptor> {
-    constructor() {
-        super();
-
+    constructor(model:CustomerModel) {
+        super(model);
+        let f :Function = model.addCustomerFilter(x => x.firma1,BinaryType.Contains, 0);
+        this.filterMap.set("firma1",f);
     }
 
 
-    addFilter(model:CustomerModel,property:string,value:any) {
+    addFilter(property:string,value:any) {
+        let customerModel = <CustomerModel>this.model;
         if (property === "firma1") {
-            model.addCustomerFilter({
-                firma1: {
-                    operator: StringMethods.Contains,
-                    value: value
-                }
-            });
+            let f = this.filterMap.get("firma1");
+            f.call(value);
+            customerModel.addCustomerFilter(x => x.firma1,BinaryType.Contains, value);
         }
 
         if (property === "firma2") {
-            model.addCustomerFilter({
-                firma2: {
-                    operator: StringMethods.Contains,
-                    value: value
-                }
-            });
+            customerModel.addCustomerFilter(x => x.firma2,BinaryType.Contains, value);
         }
 
         if (property === "firstName") {
-            model.addContactFilter({
-                firstName: {
-                    operator: StringMethods.Contains,
-                    value: value
-                }
-            });
+            customerModel.addContactFilter(x => x.firstName,BinaryType.Contains, value);
         }
 
         if (property === "lastName") {
-            model.addContactFilter({
-                lastName: {
-                    operator: StringMethods.Contains,
-                    value: value
-                }
-            });
+            customerModel.addContactFilter(x => x.lastName,BinaryType.Contains, value);
         }
-        this.staticFilter1();
     }
 
-    addFilter1(model:CustomerModel,property:string,value:any) {
+    sort(property:string) {
+        let customerModel = <CustomerModel>this.model;
         if (property === "firma1") {
-            model.addFilter(x => x.firma1,StringMethods.Contains,value);
+            customerModel.customerSort(x => x.firma1);
         }
-
         if (property === "firma2") {
-            model.addFilter(x => x.firma2,StringMethods.Contains,value);
+            customerModel.customerSort(x => x.firma2);
         }
-
         if (property === "firstName") {
-            model.addFilter(x => x.contacts[0].firstName,StringMethods.Contains,value);
+            customerModel.contactSort(x => x.firstName);
         }
-
         if (property === "lastName") {
-            model.addFilter(x => x.contacts[0].lastName,StringMethods.Contains,value);
+            customerModel.contactSort(x => x.lastName);
         }
-
     }
 
-    staticFilter() {
-        let filter = <ICustomerDtoDescriptor>{
-            firma1:{
-                operator:StringMethods.Contains,
-                value:"s"
-            },
-            contacts: {
-                method:Methods.Any,
-                value:{
-                    firstName: {
-                        operator:StringMethods.Contains,
-                        value:"w"}
-                }
-            }
-        }
-
+    isSortedByAscending(property:string) :boolean{
+        return true;
+    }
+    isSortedByDescending(property:string) :boolean{
+        return false;
     }
 
-    staticFilter1() {
-        let filter:IContactDtoDescriptor;
-        filter = {
-            firstName:{
-                operator:StringMethods.Contains,
-                value:"s"
-            },
-            customer: {
-                firma1:{
-                    operator:StringMethods.EndsWith,
-                    value:"w"
-                }
-
-
-            }
-        }
-
-        let v = new DescriptorVisitor();
-        v.visitDescriptor(filter);
-
-    }
 
 
 }

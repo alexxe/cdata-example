@@ -8,36 +8,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var common_1 = require("@angular/common");
-var DataTable_1 = require("./DataTable");
-var DefaultSorter_1 = require("./DefaultSorter");
-var Paginator_1 = require("./Paginator");
-var BootstrapPaginator_1 = require("./BootstrapPaginator");
-var DataTableModule = (function () {
-    function DataTableModule() {
-    }
-    DataTableModule = __decorate([
-        core_1.NgModule({
-            imports: [
-                common_1.CommonModule
-            ],
-            declarations: [
-                DataTable_1.DataTable,
-                DefaultSorter_1.DefaultSorter,
-                Paginator_1.Paginator,
-                BootstrapPaginator_1.BootstrapPaginator
-            ],
-            exports: [
-                DataTable_1.DataTable,
-                DefaultSorter_1.DefaultSorter,
-                Paginator_1.Paginator,
-                BootstrapPaginator_1.BootstrapPaginator
-            ]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], DataTableModule);
-    return DataTableModule;
-}());
+const core_1 = require("@angular/core");
+const common_1 = require("@angular/common");
+const DataTable_1 = require("./DataTable");
+const DefaultSorter_1 = require("./DefaultSorter");
+const Paginator_1 = require("./Paginator");
+const BootstrapPaginator_1 = require("./BootstrapPaginator");
+let DataTableModule = class DataTableModule {
+};
+DataTableModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule
+        ],
+        declarations: [
+            DataTable_1.DataTable,
+            DefaultSorter_1.DefaultSorter,
+            Paginator_1.Paginator,
+            BootstrapPaginator_1.BootstrapPaginator
+        ],
+        exports: [
+            DataTable_1.DataTable,
+            DefaultSorter_1.DefaultSorter,
+            Paginator_1.Paginator,
+            BootstrapPaginator_1.BootstrapPaginator
+        ]
+    }), 
+    __metadata('design:paramtypes', [])
+], DataTableModule);
 exports.DataTableModule = DataTableModule;
 //# sourceMappingURL=DataTableModule.js.map

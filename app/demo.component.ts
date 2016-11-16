@@ -28,13 +28,13 @@ export class DemoComponent {
   }
 
   constructor(private http: Http) {
-    this.dataModel = new CustomerModel(http,"http://localhost/Example.WebApi/api/Model/Default");
-    this.viewModel = new CustomerViewModel();
+    this.dataModel = new CustomerModel(http,"http://localhost/Example.WebApi/api/Test/Default");
+    this.viewModel = new CustomerViewModel(this.dataModel);
     this.refresh();
   }
 
   public refresh() {
-    this.viewModel.setFilters(this.dataModel);
+    this.dataModel.applyFilters();
     this.dataModel.refresh();
   }
 

@@ -8,55 +8,46 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+const core_1 = require('@angular/core');
 require('rxjs/add/observable/fromPromise');
 require('rxjs/add/operator/mergeMap');
 require('rxjs/add/operator/catch');
 require('rxjs/add/observable/throw');
-var http_1 = require("@angular/http");
-var CustomerViewModel_1 = require("./CustomerViewModel");
-var CustomerModel_1 = require("./CustomerModel");
-var DemoComponent = (function () {
-    function DemoComponent(http) {
+const http_1 = require("@angular/http");
+const CustomerViewModel_1 = require("./CustomerViewModel");
+const CustomerModel_1 = require("./CustomerModel");
+let DemoComponent = class DemoComponent {
+    constructor(http) {
         this.http = http;
-        this.dataModel = new CustomerModel_1.CustomerModel(http, "http://localhost/Example.WebApi/api/Model/Default");
-        this.viewModel = new CustomerViewModel_1.CustomerViewModel();
+        this.dataModel = new CustomerModel_1.CustomerModel(http, "http://localhost/Example.WebApi/api/Test/Default");
+        this.viewModel = new CustomerViewModel_1.CustomerViewModel(this.dataModel);
         this.refresh();
     }
-    Object.defineProperty(DemoComponent.prototype, "data", {
-        get: function () {
-            return this.dataModel.data;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DemoComponent.prototype, "filter", {
-        get: function () {
-            return this.viewModel.filter;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    DemoComponent.prototype.refresh = function () {
-        this.viewModel.setFilters(this.dataModel);
+    get data() {
+        return this.dataModel.data;
+    }
+    get filter() {
+        return this.viewModel.filter;
+    }
+    refresh() {
+        this.dataModel.applyFilters();
         this.dataModel.refresh();
-    };
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], DemoComponent.prototype, "data", null);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], DemoComponent.prototype, "filter", null);
-    DemoComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            templateUrl: './app/demo.component.html'
-        }), 
-        __metadata('design:paramtypes', [http_1.Http])
-    ], DemoComponent);
-    return DemoComponent;
-}());
+    }
+};
+__decorate([
+    core_1.Input(), 
+    __metadata('design:type', Object)
+], DemoComponent.prototype, "data", null);
+__decorate([
+    core_1.Input(), 
+    __metadata('design:type', Object)
+], DemoComponent.prototype, "filter", null);
+DemoComponent = __decorate([
+    core_1.Component({
+        selector: 'my-app',
+        templateUrl: './app/demo.component.html'
+    }), 
+    __metadata('design:paramtypes', [http_1.Http])
+], DemoComponent);
 exports.DemoComponent = DemoComponent;
 //# sourceMappingURL=demo.component.js.map
