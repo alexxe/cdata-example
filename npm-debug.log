@@ -1,6 +1,6 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
-1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli [ 'E:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'E:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
 1 verbose cli   'run-script',
 1 verbose cli   'start' ]
 2 info using npm@3.10.8
@@ -10,25 +10,25 @@
 6 silly lifecycle cdata-example@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle cdata-example@1.0.0~start: cdata-example@1.0.0
 8 verbose lifecycle cdata-example@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle cdata-example@1.0.0~start: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;D:\Development\github\cdata-example\node_modules\.bin;C:\PROGRAMDATA\ORACLE\JAVA\JAVAPATH;C:\PROGRAM FILES (X86)\INTEL\ICLS CLIENT\;C:\PROGRAM FILES\INTEL\ICLS CLIENT\;C:\Windows\SYSTEM32;C:\Windows;C:\Windows\SYSTEM32\WBEM;C:\Windows\SYSTEM32\WINDOWSPOWERSHELL\V1.0\;C:\PROGRAM FILES\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\DAL;C:\PROGRAM FILES\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\IPT;C:\PROGRAM FILES (X86)\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\DAL;C:\PROGRAM FILES (X86)\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\IPT;C:\PROGRAM FILES\MICROSOFT SYSTEM CENTER 2012\SERVICE MANAGER\;C:\PROGRAM FILES (X86)\MICROSOFT ASP.NET\ASP.NET WEB PAGES\V1.0\;C:\PROGRAM FILES (X86)\MICROSOFT SQL SERVER\100\TOOLS\BINN\;C:\PROGRAM FILES\MICROSOFT SQL SERVER\100\TOOLS\BINN\;C:\PROGRAM FILES\MICROSOFT SQL SERVER\100\DTS\BINN\;C:\Windows\SYSTEM32\WINDOWSPOWERSHELL\V1.0\;C:\PROGRAM FILES\MICROSOFT\WEB PLATFORM INSTALLER\;C:\PROGRAM FILES (X86)\COMMON FILES\ACRONIS\SNAPAPI\;%TFSPOWERTOOLDIR%;%BPADIR%;C:\PROGRAM FILES\MICROSOFT SQL SERVER\120\TOOLS\BINN\;C:\PROGRAM FILES\JAVA\JRE1.8.0_25\BIN;C:\USERS\DLE\APPDATA\LOCAL\ANDROID\SDK\PLATFORM-TOOLS\;C:\PROGRAM FILES\MICROSOFT SQL SERVER\CLIENT SDK\ODBC\110\TOOLS\BINN\;C:\PROGRAM FILES (X86)\MICROSOFT SQL SERVER\120\TOOLS\BINN\;C:\PROGRAM FILES\MICROSOFT SQL SERVER\120\DTS\BINN\;C:\PROGRAM FILES (X86)\MICROSOFT SQL SERVER\120\TOOLS\BINN\MANAGEMENTSTUDIO\;C:\PROGRAM FILES (X86)\MICROSOFT SQL SERVER\120\DTS\BINN\;D:\DEVELOPMENT\ANDROID\SDK\TOOLS;C:\PROGRAM FILES\GIT\BIN\;C:\Windows\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\nodejs\;C:\Users\dle\AppData\Roaming\npm
-10 verbose lifecycle cdata-example@1.0.0~start: CWD: D:\Development\github\cdata-example
+9 verbose lifecycle cdata-example@1.0.0~start: PATH: E:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;F:\Projects\cdata-example\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\SYSTEM32;C:\WINDOWS;C:\WINDOWS\SYSTEM32\WBEM;C:\WINDOWS\SYSTEM32\WINDOWSPOWERSHELL\V1.0\;E:\PROGRAM FILES\MICROSOFT SQL SERVER\CLIENT SDK\ODBC\110\TOOLS\BINN\;E:\PROGRAM FILES (X86)\MICROSOFT SQL SERVER\120\TOOLS\BINN\;E:\PROGRAM FILES\MICROSOFT SQL SERVER\120\TOOLS\BINN\;E:\PROGRAM FILES\MICROSOFT SQL SERVER\120\DTS\BINN\;E:\PROGRAM FILES (X86)\MICROSOFT SQL SERVER\120\TOOLS\BINN\MANAGEMENTSTUDIO\;E:\PROGRAM FILES (X86)\MICROSOFT SQL SERVER\120\DTS\BINN\;C:\Users\user\.DNX\BIN;C:\PROGRAM FILES\MICROSOFT DNX\DNVM\;;C:\PROGRAM FILES\GIT\CMD;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;E:\Program Files\Microsoft SQL Server\130\Tools\Binn\;E:\Program Files\nodejs\;C:\Users\user\AppData\Local\Microsoft\WindowsApps;C:\Users\user\AppData\Roaming\npm
+10 verbose lifecycle cdata-example@1.0.0~start: CWD: F:\Projects\cdata-example
 11 silly lifecycle cdata-example@1.0.0~start: Args: [ '/d /s /c', 'tsc && concurrently "tsc -w" "lite-server" ' ]
 12 silly lifecycle cdata-example@1.0.0~start: Returned: code: 2  signal: null
 13 info lifecycle cdata-example@1.0.0~start: Failed to exec start script
 14 verbose stack Error: cdata-example@1.0.0 start: `tsc && concurrently "tsc -w" "lite-server" `
 14 verbose stack Exit status 2
-14 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
+14 verbose stack     at EventEmitter.<anonymous> (E:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
+14 verbose stack     at ChildProcess.<anonymous> (E:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at ChildProcess.emit (events.js:191:7)
 14 verbose stack     at maybeClose (internal/child_process.js:877:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid cdata-example@1.0.0
-16 verbose cwd D:\Development\github\cdata-example
-17 error Windows_NT 6.1.7601
-18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run-script" "start"
+16 verbose cwd F:\Projects\cdata-example
+17 error Windows_NT 10.0.14393
+18 error argv "E:\\Program Files\\nodejs\\node.exe" "E:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run-script" "start"
 19 error node v6.9.1
 20 error npm  v3.10.8
 21 error code ELIFECYCLE

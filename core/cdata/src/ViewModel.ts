@@ -1,10 +1,12 @@
 import {DataModel} from "./DataModel";
 import {Projection} from "./Projection";
+import {IDataModel} from "./IDataModel";
+import {IModelEntity} from "./IModelEntity";
 
-export abstract class ViewModel<TP extends Projection>  {
+export abstract class ViewModel<TP extends Projection,TM extends IModelEntity>  {
     filter: any;
     filterMap:Map<string,Function>;
-    constructor(protected model:DataModel<TP>) {
+    constructor(protected model:IDataModel<TM>) {
         this.filter = {};
         this.filterMap = new Map();
         this.initFilterMap();

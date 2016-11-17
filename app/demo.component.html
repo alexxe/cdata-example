@@ -3,6 +3,15 @@
     <div class="row">
         <div class="col-12 col-md-6 col-lg-3">
             <div class="group">
+                <label for="firma" class="col-3">firma</label>
+                <div class="col-9">
+                    <input type="text" id="firma" [(ngModel)]="viewModel.filter['firma']"
+                           name="firma">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="group">
                 <label for="firma1" class="col-3">firma1</label>
                 <div class="col-9">
                     <input type="text" id="firma1" [(ngModel)]="viewModel.filter['firma1']"
@@ -12,28 +21,19 @@
         </div>
         <div class="col-12 col-md-6 col-lg-3">
             <div class="group">
-                <label for="firma2" class="col-3">firma2</label>
+                <label for="vorname" class="col-3">vorname</label>
                 <div class="col-9">
-                    <input type="text" id="firma2" [(ngModel)]="viewModel.filter['firma2']"
-                           name="firma2">
+                    <input type="text" id="vorname" [(ngModel)]="viewModel.filter['vorname']"
+                           name="vorname">
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-3">
             <div class="group">
-                <label for="firstName" class="col-3">firstName</label>
+                <label for="nachname" class="col-3">nachname</label>
                 <div class="col-9">
-                    <input type="text" id="firstName" [(ngModel)]="viewModel.filter['firstName']"
-                           name="firstName">
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="group">
-                <label for="lastName" class="col-3">lastName</label>
-                <div class="col-9">
-                    <input type="text" id="lastName" [(ngModel)]="viewModel.filter['lastName']"
-                           name="lastName">
+                    <input type="text" id="nachname" [(ngModel)]="viewModel.filter['nachname']"
+                           name="nachname">
                 </div>
             </div>
         </div>
@@ -65,10 +65,11 @@
     </tr>
     </thead>
     <tbody>
-
-    <tr *ngFor="let item of dataModel.data">
-        <td *ngFor="let value of item.test()">{{value}}</td>
-        <td >{{item.firma}}</td>
+    <tr >
+        <td *ngFor="let value of dataModel.sorting" (click)="viewModel.sort(value)">{{value}}</td>
+    </tr>
+    <tr *ngFor="let item of dataModel.data; let i = index;">
+        <td *ngFor="let value of item.values">{{value}}</td>
     </tr>
 
 

@@ -5,12 +5,23 @@ const QNode_1 = require("./QNode");
 const QNode_2 = require("./QNode");
 const QNode_3 = require("./QNode");
 const QDescriptor_1 = require("./QDescriptor");
+const DataRow_1 = require("./DataRow");
 class DataModel {
-    constructor(http, url) {
+    constructor(http, url, modelEntry) {
         this.http = http;
         this.url = url;
         this.includes = [];
         this.filters = [];
+        this.sorting = [];
+        this.queryable = {
+            Type: QNode_1.NodeType.Querable,
+            Value: modelEntry.constructor.name
+        };
+    }
+    binding(p, m) {
+        let property = this.convertLambdaToPath(p);
+        let path = this.convertLambdaToPath(m);
+        return property + ":" + path;
     }
     addFilter(path, op, value) {
         let filter;
@@ -28,14 +39,15 @@ class DataModel {
         };
         this.filters.push(filter);
     }
-    buildFilter() {
+    buildQuery() {
         if (this.filters.length == 0) {
+            this.projection.Left = this.queryable;
             return this.projection;
         }
         let where = {
             Type: QNode_1.NodeType.Method,
             Value: QNode_3.MethodType.Where,
-            Left: this.projection
+            Left: this.queryable
         };
         for (var i = 0; i < this.filters.length; i++) {
             let node = this.filters[i];
@@ -52,22 +64,27 @@ class DataModel {
                 where.Right = binary;
             }
         }
-        return where;
+        this.projection.Left = where;
+        return this.projection;
     }
     refresh() {
-        let filter = this.buildFilter();
+        let root = this.buildQuery();
         let descroiptor = new QDescriptor_1.QDescriptor();
-        descroiptor.Root = filter;
+        descroiptor.Root = root;
         this.getData(descroiptor);
         this.resetModel();
     }
     resetModel() {
         this.includes = [];
+        this.filters = [];
     }
     getData(query) {
         this.post(query).subscribe(res => {
             let mapped = [];
-            res.forEach(d => mapped.push(d));
+            res.forEach(d => mapped.push(new DataRow_1.DataRow(d)));
+            if (this.sorting.length == 0) {
+                this.sorting = mapped[0].properties;
+            }
             this.data = mapped;
         });
     }

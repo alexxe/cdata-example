@@ -1,4 +1,4 @@
-import {IModelEntity} from "../../core/cdata/src/IModel";
+import {IModelEntity} from "../../../core/cdata/src/IModelEntity";
 import {CustomerDto} from "./CustomerDto";
 
 

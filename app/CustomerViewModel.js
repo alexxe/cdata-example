@@ -6,10 +6,10 @@ class CustomerViewModel extends ViewModel_1.ViewModel {
         super(model);
     }
     initFilterMap() {
-        this.filterMap.set("firma1", (value) => this.model.addFilter(x => x.firma, QNode_1.BinaryType.Contains, value));
-        this.filterMap.set("firma2", (value) => this.model.addFilter(x => x.firma1, QNode_1.BinaryType.Contains, value));
-        this.filterMap.set("firstName", (value) => this.model.addFilter(x => x.name, QNode_1.BinaryType.Contains, value));
-        this.filterMap.set("lastName", (value) => this.model.addFilter(x => x.nachname, QNode_1.BinaryType.Contains, value));
+        this.filterMap.set("firma", (value) => this.model.addFilter(x => x.customer.firma1, QNode_1.BinaryType.Contains, value));
+        this.filterMap.set("firma1", (value) => this.model.addFilter(x => x.customer.firma2, QNode_1.BinaryType.Contains, value));
+        this.filterMap.set("vorname", (value) => this.model.addFilter(x => x.firstName, QNode_1.BinaryType.Contains, value));
+        this.filterMap.set("nachname", (value) => this.model.addFilter(x => x.lastName, QNode_1.BinaryType.Contains, value));
     }
     sort(property) {
         // let customerModel = <CustomerModel>this.model;

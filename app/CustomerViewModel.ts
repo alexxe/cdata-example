@@ -1,20 +1,20 @@
 import {ViewModel} from "../core/cdata/src/ViewModel";
 import {CustomerModel} from "./CustomerModel";
 import {BinaryType} from "../core/cdata/src/QNode";
-import {Projection} from "../core/cdata/src/Projection";
-import {CustomerProjection} from "./model/CustomerProjection";
+import {CustomerContactProjection} from "./model/CustomerContactProjection";
+import {ContactDto} from "./model/generated/ContactDto";
 
-export class CustomerViewModel extends ViewModel<CustomerProjection> {
+export class CustomerViewModel extends ViewModel<CustomerContactProjection,ContactDto> {
     constructor(model:CustomerModel) {
         super(model);
 
     }
 
     initFilterMap() {
-        this.filterMap.set("firma1",(value:any) => this.model.addFilter(x => x.firma,BinaryType.Contains, value));
-        this.filterMap.set("firma2",(value:any) => this.model.addFilter(x => x.firma1,BinaryType.Contains, value));
-        this.filterMap.set("firstName",(value:any) => this.model.addFilter(x => x.name,BinaryType.Contains, value));
-        this.filterMap.set("lastName",(value:any) => this.model.addFilter(x => x.nachname,BinaryType.Contains, value));
+        this.filterMap.set("firma",(value:any) => this.model.addFilter(x => x.customer.firma1,BinaryType.Contains, value));
+        this.filterMap.set("firma1",(value:any) => this.model.addFilter(x => x.customer.firma2,BinaryType.Contains, value));
+        this.filterMap.set("vorname",(value:any) => this.model.addFilter(x => x.firstName,BinaryType.Contains, value));
+        this.filterMap.set("nachname",(value:any) => this.model.addFilter(x => x.lastName,BinaryType.Contains, value));
     }
 
     sort(property:string) {
