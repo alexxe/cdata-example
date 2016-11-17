@@ -1,15 +1,20 @@
 import { Http } from "@angular/http";
-import { IModel } from "./IModel";
-import { IFilterDescriptor } from "./CQuery";
-export declare abstract class DataModel<TM extends IModel, TD extends IFilterDescriptor> {
+import { QNode } from "./QNode";
+import { BinaryType } from "./QNode";
+import { Projection } from "./Projection";
+export declare class DataModel<TP extends Projection> {
     private http;
     private url;
-    private model;
-    constructor(http: Http, url: string, model: TM);
-    filterDescriptors: TD[];
-    data: TM[];
-    abstract applyFilters(): any;
+    constructor(http: Http, url: string);
+    protected projection: QNode;
+    private filters;
+    private includes;
+    data: TP[];
+    addFilter(path: (x: TP) => any, op: BinaryType, value: any): void;
+    private buildFilter();
     refresh(): void;
+    protected resetModel(): void;
     private getData(query);
     private post(query);
+    protected convertLambdaToPath(lambda: any): string;
 }

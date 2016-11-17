@@ -1,9 +1,11 @@
-import { IFilterDescriptor } from "./CQuery";
+/// <reference types="lodash" />
 import { DataModel } from "./DataModel";
-import { IModel } from "./IModel";
-export declare abstract class ViewModel<TM extends IModel, TD extends IFilterDescriptor> {
+import { Projection } from "./Projection";
+export declare abstract class ViewModel<TP extends Projection> {
+    protected model: DataModel<TP>;
     filter: any;
-    constructor();
-    abstract addFilter(model: DataModel<TM, TD>, property: any, value: any): any;
-    setFilters(model: DataModel<TM, TD>): void;
+    filterMap: Map<string, Function>;
+    constructor(model: DataModel<TP>);
+    protected abstract initFilterMap(): any;
+    applyFilterState(): void;
 }

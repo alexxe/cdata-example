@@ -1,50 +1,85 @@
 import {RequestOptions, Headers, Http} from "@angular/http";
 import {Observable} from "rxjs";
 require('rxjs/add/operator/map');
-import {IModel} from "./IModel";
-import {CQueryDescriptor, CompareOperator, StringMethods} from "./CQueryDescriptor";
-import {IFilterDescriptor, CQuery} from "./CQuery";
-import {ViewModel} from "./ViewModel";
-import {DescriptorVisitor} from "./DescriptorVisitor";
 import {QNode, NodeType} from "./QNode";
+import {BinaryType} from "./QNode";
+import {MethodType} from "./QNode";
+import {QDescriptor} from "./QDescriptor";
+import {Projection} from "./Projection";
 
 
-export abstract class DataModel<TM extends IModel,TD extends IFilterDescriptor> {
-    constructor(private http: Http,private url:string,private model:TM) {
-        this.filterDescriptors = [];
+export class DataModel<TP extends Projection> {
+    constructor(private http: Http,private url:string) {
         this.includes = [];
-        this.queryable = {
-            Type:NodeType.Querable,
-            Value:model.constructor.name
-        };
+        this.filters = [];
+
     }
-    protected queryable:QNode;
-    protected filterDescriptors: TD[];
+    protected projection:QNode;
+    private filters:Array<QNode>;
     private includes: string[];
-    public data:TM[];
+    public data:TP[];
 
 
-    abstract applyFilters() : QNode;
+    addFilter(path: (x:TP) => any,op:BinaryType,value:any) {
+        let filter:QNode;
+        filter = {
+            Type:NodeType.Binary ,
+            Value: op,
+            Left:{
+                Type:NodeType.Member,
+                Value:this.convertLambdaToPath(path)
+            },
+            Right:{
+                Type:NodeType.Constant,
+                Value:value
+            }
+        };
+        this.filters.push(filter);
+    }
 
+    private buildFilter() :QNode {
+        if(this.filters.length == 0) {
+            return this.projection;
+        }
+
+        let where:QNode = {
+            Type:NodeType.Method,
+            Value:MethodType.Where,
+            Left:this.projection
+        };
+
+        for(var i = 0; i < this.filters.length; i++) {
+            let node = this.filters[i];
+            if(i == 0){
+                where.Right = node;
+            }
+            else {
+                let binary:QNode = {
+                    Type: NodeType.Binary,
+                    Value:BinaryType.And,
+                    Left:where.Right,
+                    Right:node
+                };
+                where.Right = binary;
+            }
+
+        }
+        return where;
+    }
 
     refresh() {
-        let query = this.applyFilters();
-        this.getData(query);
+        let filter = this.buildFilter();
+        let descroiptor = new QDescriptor();
+        descroiptor.Root = filter;
+        this.getData(descroiptor);
         this.resetModel();
     }
 
     protected resetModel() {
-        this.filterDescriptors = [];
         this.includes = [];
     }
 
-    protected addInclude(f: (x:TM) => any) {
-        this.includes.push(this.convertLambdaToPath(f.toString()));
-    }
-
-
-
-    private getData(query: QNode) {
+    private getData(query: QDescriptor) {
         this.post(query).subscribe(
             res => {
                 let mapped = [];
@@ -53,12 +88,12 @@ export abstract class DataModel<TM extends IModel,TD extends IFilterDescriptor> 
             });
     }
 
-    private post(query: QNode) : Observable<TM[]> {
+    private post(query: QDescriptor) : Observable<TP[]> {
         let body = JSON.stringify(query);
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
         return this.http.post(this.url, body, options).
-        map(res => <TM[]>res.json());
+        map(res => <TP[]>res.json());
     }
 
     protected convertLambdaToPath(lambda:any) : string {

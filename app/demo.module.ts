@@ -5,14 +5,12 @@ import { CommonModule } from '@angular/common';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { DemoComponent } from './demo.component';
 
-import {DataTableModule} from "./../core/table";
 
 @NgModule({
   declarations: [
     DemoComponent
   ],
   imports: [
-    DataTableModule,
     BrowserModule,
     FormsModule,
     CommonModule,

@@ -9,17 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require('@angular/core');
-require('rxjs/add/observable/fromPromise');
-require('rxjs/add/operator/mergeMap');
-require('rxjs/add/operator/catch');
-require('rxjs/add/observable/throw');
 const http_1 = require("@angular/http");
 const CustomerViewModel_1 = require("./CustomerViewModel");
 const CustomerModel_1 = require("./CustomerModel");
 let DemoComponent = class DemoComponent {
     constructor(http) {
         this.http = http;
-        this.dataModel = new CustomerModel_1.CustomerModel(http, "http://localhost/Example.WebApi/api/Test/Default");
+        this.dataModel = new CustomerModel_1.CustomerModel(http, "http://localhost/Example.WebApi/api/Model/Default");
         this.viewModel = new CustomerViewModel_1.CustomerViewModel(this.dataModel);
         this.refresh();
     }

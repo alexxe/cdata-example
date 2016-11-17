@@ -1,60 +1,60 @@
-<div >
+<div>
     <!--<form name="filterForm" (ngSubmit)="refresh()">-->
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="group">
-                    <label for="firma1" class="col-3">firma1</label>
-                    <div class="col-9">
-                        <input type="text" id="firma1" [(ngModel)]="viewModel.filter['firma1']"
-                               name="firma1">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="group">
-                    <label for="firma2" class="col-3">firma2</label>
-                    <div class="col-9">
-                        <input type="text" id="firma2"  [(ngModel)]="viewModel.filter['firma2']"
-                               name="firma2">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="group">
-                    <label for="firstName" class="col-3">firstName</label>
-                    <div class="col-9">
-                        <input type="text" id="firstName" [(ngModel)]="viewModel.filter['firstName']"
-                               name="firstName">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="group">
-                    <label for="lastName" class="col-3">lastName</label>
-                    <div class="col-9">
-                        <input type="text" id="lastName" [(ngModel)]="viewModel.filter['lastName']"
-                               name="lastName">
-                    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="group">
+                <label for="firma1" class="col-3">firma1</label>
+                <div class="col-9">
+                    <input type="text" id="firma1" [(ngModel)]="viewModel.filter['firma1']"
+                           name="firma1">
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div style="float: right">
-                    <button md-raised-button color="primary" class="small" (click)="refresh()"  type="button">SEARCH</button>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="group">
+                <label for="firma2" class="col-3">firma2</label>
+                <div class="col-9">
+                    <input type="text" id="firma2" [(ngModel)]="viewModel.filter['firma2']"
+                           name="firma2">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="group">
+                <label for="firstName" class="col-3">firstName</label>
+                <div class="col-9">
+                    <input type="text" id="firstName" [(ngModel)]="viewModel.filter['firstName']"
+                           name="firstName">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="group">
+                <label for="lastName" class="col-3">lastName</label>
+                <div class="col-9">
+                    <input type="text" id="lastName" [(ngModel)]="viewModel.filter['lastName']"
+                           name="lastName">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div style="float: right">
+                <button md-raised-button color="primary" class="small" (click)="refresh()" type="button">SEARCH</button>
 
-                </div>
             </div>
         </div>
+    </div>
     <!--</form>-->
 </div>
 
 
-<table class="table table-striped" >
+<table class="table table-striped">
     <thead class="blue">
     <tr>
         <th (click)="viewModel.sort('Id')">ID <span [class.sortAz]="viewModel.isSortedByAscending('Id')"
-                                                [class.sortZa]="viewModel.isSortedByDescending('Id')"></span>
+                                                    [class.sortZa]="viewModel.isSortedByDescending('Id')"></span>
         </th>
         <th (click)="viewModel.sort('Name')">GENERAL.NAME <span
                 [class.sortAz]="viewModel.isSortedByAscending('Name')"
@@ -65,29 +65,12 @@
     </tr>
     </thead>
     <tbody>
-    <template ngFor  let-customer [ngForOf]="dataModel.data" >
-        <template [ngIf]="customer.contacts.length === 0">
-            <tr >
-                <td>{{customer.firma1}}</td>
-                <td>{{customer.firma2}}</td>
-                <td>{{customer.edvNr}}</td>
-                <td>{{customer.ort | uppercase}}</td>
-                <td></td>
-                <td></td>
-            </tr>
-         </template>
-        <template ngFor let-contact [ngForOf]="customer.contacts" >
-            <tr >
-                <td>{{customer.firma1}}</td>
-                <td>{{customer.firma2}}</td>
-                <td>{{customer.edvNr}}</td>
-                <td>{{customer.ort | uppercase}}</td>
-                <td>{{contact.firstName}}</td>
-                <td>{{contact.lastName}}</td>
 
-            </tr>
-        </template>
-    </template>
+    <tr *ngFor="let item of dataModel.data">
+        <td *ngFor="let value of item.test()">{{value}}</td>
+        <td >{{item.firma}}</td>
+    </tr>
+
 
     </tbody>
     <tfoot>

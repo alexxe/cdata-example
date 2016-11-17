@@ -6,26 +6,25 @@ class CustomerViewModel extends ViewModel_1.ViewModel {
         super(model);
     }
     initFilterMap() {
-        let customerModel = this.model;
-        this.filterMap.set("firma1", (value) => customerModel.addCustomerFilter(x => x.firma1, QNode_1.BinaryType.Contains, value));
-        this.filterMap.set("firma2", (value) => customerModel.addCustomerFilter(x => x.firma2, QNode_1.BinaryType.Contains, value));
-        this.filterMap.set("firstName", (value) => customerModel.addContactFilter(x => x.firstName, QNode_1.BinaryType.Contains, value));
-        this.filterMap.set("lastName", (value) => customerModel.addContactFilter(x => x.lastName, QNode_1.BinaryType.Contains, value));
+        this.filterMap.set("firma1", (value) => this.model.addFilter(x => x.firma, QNode_1.BinaryType.Contains, value));
+        this.filterMap.set("firma2", (value) => this.model.addFilter(x => x.firma1, QNode_1.BinaryType.Contains, value));
+        this.filterMap.set("firstName", (value) => this.model.addFilter(x => x.name, QNode_1.BinaryType.Contains, value));
+        this.filterMap.set("lastName", (value) => this.model.addFilter(x => x.nachname, QNode_1.BinaryType.Contains, value));
     }
     sort(property) {
-        let customerModel = this.model;
-        if (property === "firma1") {
-            customerModel.customerSort(x => x.firma1);
-        }
-        if (property === "firma2") {
-            customerModel.customerSort(x => x.firma2);
-        }
-        if (property === "firstName") {
-            customerModel.contactSort(x => x.firstName);
-        }
-        if (property === "lastName") {
-            customerModel.contactSort(x => x.lastName);
-        }
+        // let customerModel = <CustomerModel>this.model;
+        // if (property === "firma1") {
+        //     customerModel.customerSort(x => x.firma1);
+        // }
+        // if (property === "firma2") {
+        //     customerModel.customerSort(x => x.firma2);
+        // }
+        // if (property === "firstName") {
+        //     customerModel.contactSort(x => x.firstName);
+        // }
+        // if (property === "lastName") {
+        //     customerModel.contactSort(x => x.lastName);
+        // }
     }
     isSortedByAscending(property) {
         return true;

@@ -2,29 +2,67 @@
 const http_1 = require("@angular/http");
 require('rxjs/add/operator/map');
 const QNode_1 = require("./QNode");
+const QNode_2 = require("./QNode");
+const QNode_3 = require("./QNode");
+const QDescriptor_1 = require("./QDescriptor");
 class DataModel {
-    constructor(http, url, model) {
+    constructor(http, url) {
         this.http = http;
         this.url = url;
-        this.model = model;
-        this.filterDescriptors = [];
         this.includes = [];
-        this.queryable = {
-            Type: QNode_1.NodeType.Querable,
-            Value: model.constructor.name
+        this.filters = [];
+    }
+    addFilter(path, op, value) {
+        let filter;
+        filter = {
+            Type: QNode_1.NodeType.Binary,
+            Value: op,
+            Left: {
+                Type: QNode_1.NodeType.Member,
+                Value: this.convertLambdaToPath(path)
+            },
+            Right: {
+                Type: QNode_1.NodeType.Constant,
+                Value: value
+            }
         };
+        this.filters.push(filter);
+    }
+    buildFilter() {
+        if (this.filters.length == 0) {
+            return this.projection;
+        }
+        let where = {
+            Type: QNode_1.NodeType.Method,
+            Value: QNode_3.MethodType.Where,
+            Left: this.projection
+        };
+        for (var i = 0; i < this.filters.length; i++) {
+            let node = this.filters[i];
+            if (i == 0) {
+                where.Right = node;
+            }
+            else {
+                let binary = {
+                    Type: QNode_1.NodeType.Binary,
+                    Value: QNode_2.BinaryType.And,
+                    Left: where.Right,
+                    Right: node
+                };
+                where.Right = binary;
+            }
+        }
+        return where;
     }
     refresh() {
-        let query = this.applyFilters();
-        this.getData(query);
+        let filter = this.buildFilter();
+        let descroiptor = new QDescriptor_1.QDescriptor();
+        descroiptor.Root = filter;
+        this.getData(descroiptor);
         this.resetModel();
     }
     resetModel() {
-        this.filterDescriptors = [];
         this.includes = [];
-    }
-    addInclude(f) {
-        this.includes.push(this.convertLambdaToPath(f.toString()));
     }
     getData(query) {
         this.post(query).subscribe(res => {

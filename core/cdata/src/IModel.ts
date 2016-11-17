@@ -1,3 +1,4 @@
-export interface IModel {
-    type: string;
+export interface IModelEntity {
+
 }
+

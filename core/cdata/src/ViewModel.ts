@@ -1,11 +1,10 @@
-import {IFilterDescriptor} from "./CQuery";
 import {DataModel} from "./DataModel";
-import {IModel} from "./IModel";
+import {Projection} from "./Projection";
 
-export abstract class ViewModel<TM extends IModel,TD extends IFilterDescriptor>  {
+export abstract class ViewModel<TP extends Projection>  {
     filter: any;
     filterMap:Map<string,Function>;
-    constructor(protected model:DataModel<TM,TD>) {
+    constructor(protected model:DataModel<TP>) {
         this.filter = {};
         this.filterMap = new Map();
         this.initFilterMap();
@@ -20,7 +19,6 @@ export abstract class ViewModel<TM extends IModel,TD extends IFilterDescriptor> 
             let value = this.filter[property];
             let f = this.filterMap.get(property);
             f.call(this.model,value);
-            //this.addFilter(property,value);
         }
     }
 

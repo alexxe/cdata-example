@@ -14,7 +14,6 @@ const platform_browser_1 = require('@angular/platform-browser');
 const common_1 = require('@angular/common');
 const http_1 = require('@angular/http');
 const demo_component_1 = require('./demo.component');
-const table_1 = require("./../core/table");
 let DemoModule = class DemoModule {
 };
 DemoModule = __decorate([
@@ -23,7 +22,6 @@ DemoModule = __decorate([
             demo_component_1.DemoComponent
         ],
         imports: [
-            table_1.DataTableModule,
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
             common_1.CommonModule,

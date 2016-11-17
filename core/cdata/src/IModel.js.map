@@ -1,1 +1,1 @@
-{"version":3,"file":"IModel.js","sourceRoot":"","sources":["IModel.ts"],"names":[],"mappings":"","sourcesContent":["export interface IModel {\r\n    type: string;\r\n}\r\n"]}
+{"version":3,"file":"IModel.js","sourceRoot":"","sources":["IModel.ts"],"names":[],"mappings":"","sourcesContent":["export interface IModelEntity {\r\n\r\n}\r\n\r\n"]}

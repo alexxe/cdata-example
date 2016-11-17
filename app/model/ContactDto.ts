@@ -1,21 +1,17 @@
-import {IModel} from "../../core/cdata/src/IModel";
+import {IModelEntity} from "../../core/cdata/src/IModel";
 import {CustomerDto} from "./CustomerDto";
 
 
-export class ContactDto implements IModel{
-	type: string;
-	constructor() {
-		this.type = "Example.Data.Contract.Model.ContactDto,Example.Data.Contract";
+export class ContactDto implements IModelEntity {
+    constructor() {
+    }
 
 
-	}
-
-
-	id: number;
-	edvNr: number;
-	firstName: string;
-	lastName: string;
-	street: string;
-	ort: string;
-	customer: CustomerDto;
+    id: number;
+    edvNr: number;
+    firstName: string;
+    lastName: string;
+    street: string;
+    ort: string;
+    customer: CustomerDto;
 }

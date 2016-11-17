@@ -1,11 +1,8 @@
 import {Component, Input} from '@angular/core';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import {Http} from "@angular/http";
 import {CustomerViewModel} from "./CustomerViewModel";
 import {CustomerModel} from "./CustomerModel";
+import {Projection} from "./../core/cdata/src/Projection";
 
 
 @Component({
@@ -28,7 +25,7 @@ export class DemoComponent {
   }
 
   constructor(private http: Http) {
-    this.dataModel = new CustomerModel(http,"http://localhost/Example.WebApi/api/Test/Default");
+    this.dataModel = new CustomerModel(http,"http://localhost/Example.WebApi/api/Model/Default");
     this.viewModel = new CustomerViewModel(this.dataModel);
     this.refresh();
   }
