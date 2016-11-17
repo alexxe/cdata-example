@@ -25,6 +25,9 @@ let DemoComponent = class DemoComponent {
     get filter() {
         return this.viewModel.filter;
     }
+    get sorting() {
+        return this.dataModel.sorting;
+    }
     refresh() {
         this.viewModel.applyFilterState();
         this.dataModel.refresh();
@@ -38,6 +41,10 @@ __decorate([
     core_1.Input(), 
     __metadata('design:type', Object)
 ], DemoComponent.prototype, "filter", null);
+__decorate([
+    core_1.Input(), 
+    __metadata('design:type', Object)
+], DemoComponent.prototype, "sorting", null);
 DemoComponent = __decorate([
     core_1.Component({
         selector: 'my-app',

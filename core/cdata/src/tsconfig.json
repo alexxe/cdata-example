@@ -8,7 +8,7 @@
     "removeComments": true,
     "sourceMap": true,
     "declaration": true,
-    "types" : ["node", "lodash"],
+    "types" : ["node"],
     "lib": [
       "dom",
       "es6"

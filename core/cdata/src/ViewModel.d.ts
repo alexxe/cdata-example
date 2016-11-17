@@ -1,11 +1,11 @@
-/// <reference types="lodash" />
-import { DataModel } from "./DataModel";
 import { Projection } from "./Projection";
-export declare abstract class ViewModel<TP extends Projection> {
-    protected model: DataModel<TP>;
+import { IDataModel } from "./IDataModel";
+import { IModelEntity } from "./IModelEntity";
+export declare abstract class ViewModel<TP extends Projection, TM extends IModelEntity> {
+    protected model: IDataModel<TM>;
     filter: any;
     filterMap: Map<string, Function>;
-    constructor(model: DataModel<TP>);
+    constructor(model: IDataModel<TM>);
     protected abstract initFilterMap(): any;
     applyFilterState(): void;
 }

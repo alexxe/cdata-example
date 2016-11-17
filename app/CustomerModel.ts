@@ -1,36 +1,28 @@
 import {DataModel} from "../core/cdata/src/DataModel";
 import {Http} from "@angular/http";
-import {CustomerDto} from "./model/CustomerDto";
-import {CustomerViewModel} from "./CustomerViewModel";
 import {QNode, NodeType, MethodType, BinaryType} from "../core/cdata/src/QNode";
-import {CustomerProjection} from "./model/CustomerProjection";
-import {ContactDto} from "./model/ContactDto";
+import {CustomerContactProjection} from "./model/CustomerContactProjection";
+import {ContactDto} from "./model/generated/ContactDto";
 
-export class CustomerModel extends DataModel<CustomerProjection>{
+export class CustomerModel extends DataModel<CustomerContactProjection,ContactDto>{
     constructor(http: Http,url:string) {
-        super(http,url);
-
-        let queryable:QNode = {
-            Type:NodeType.Querable,
-            Value:new ContactDto().constructor.name
-        };
+        super(http,url,new ContactDto());
 
         this.projection = {
             Type:NodeType.Method,
             Value:MethodType.Select,
-            Left:queryable,
             Right:{
                 Type:NodeType.Member,
-                Value:"name:firstName",
+                Value:this.binding(x => x.name,x => x.firstName),
                 Left:{
                     Type:NodeType.Member,
-                    Value:"nachname:lastName",
+                    Value:this.binding(x => x.nachname,x => x.lastName),
                     Left:{
                         Type:NodeType.Member,
-                        Value:"firma:customer.firma1",
+                        Value:this.binding(x => x.firma,x => x.customer.firma1),
                         Left:{
                             Type:NodeType.Member,
-                            Value:"firma1:customer.firma2"
+                            Value:this.binding(x => x.firma1,x => x.customer.firma2)
                         }
                     }
                 }
@@ -38,8 +30,5 @@ export class CustomerModel extends DataModel<CustomerProjection>{
         }
     }
 
-    protected resetModel() {
-        super.resetModel();
-    }
 
 }

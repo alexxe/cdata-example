@@ -23,7 +23,10 @@ export class DemoComponent {
   get filter() {
     return this.viewModel.filter;
   }
-
+  @Input()
+  get sorting() {
+    return this.dataModel.sorting;
+  }
   constructor(private http: Http) {
     this.dataModel = new CustomerModel(http,"http://localhost/Example.WebApi/api/Model/Default");
     this.viewModel = new CustomerViewModel(this.dataModel);

@@ -6,21 +6,36 @@ import {BinaryType} from "./QNode";
 import {MethodType} from "./QNode";
 import {QDescriptor} from "./QDescriptor";
 import {Projection} from "./Projection";
+import {IModelEntity} from "./IModelEntity";
+import {IDataModel} from "./IDataModel";
+import {DataRow} from "./DataRow";
 
 
-export class DataModel<TP extends Projection> {
-    constructor(private http: Http,private url:string) {
+export class DataModel<TP extends Projection,TM extends IModelEntity> implements IDataModel<TM>{
+    constructor(private http: Http,private url:string,modelEntry:IModelEntity) {
         this.includes = [];
         this.filters = [];
+        this.sorting = [];
+        this.queryable = {
+            Type:NodeType.Querable,
+            Value:modelEntry.constructor.name
+        };
 
     }
+    private queryable:QNode;
     protected projection:QNode;
     private filters:Array<QNode>;
     private includes: string[];
     public data:TP[];
+    public sorting:string[];
 
+    binding(p:((x:TP)=> void),m:((x:TM)=> void)):string {
+        let property = this.convertLambdaToPath(p);
+        let path = this.convertLambdaToPath(m);
+        return property + ":" + path;
+    }
 
-    addFilter(path: (x:TP) => any,op:BinaryType,value:any) {
+    addFilter(path: (x:TM) => any,op:BinaryType,value:any) {
         let filter:QNode;
         filter = {
             Type:NodeType.Binary ,
@@ -37,15 +52,16 @@ export class DataModel<TP extends Projection> {
         this.filters.push(filter);
     }
 
-    private buildFilter() :QNode {
+    private buildQuery() :QNode {
         if(this.filters.length == 0) {
+            this.projection.Left = this.queryable;
             return this.projection;
         }
 
         let where:QNode = {
             Type:NodeType.Method,
             Value:MethodType.Where,
-            Left:this.projection
+            Left:this.queryable
         };
 
         for(var i = 0; i < this.filters.length; i++) {
@@ -64,26 +80,32 @@ export class DataModel<TP extends Projection> {
             }
 
         }
-        return where;
+
+        this.projection.Left = where;
+        return this.projection;
     }
 
     refresh() {
-        let filter = this.buildFilter();
+        let root = this.buildQuery();
         let descroiptor = new QDescriptor();
-        descroiptor.Root = filter;
+        descroiptor.Root = root;
         this.getData(descroiptor);
         this.resetModel();
     }
 
     protected resetModel() {
         this.includes = [];
+        this.filters = [];
     }
 
     private getData(query: QDescriptor) {
         this.post(query).subscribe(
             res => {
                 let mapped = [];
-                res.forEach(d => mapped.push(d));
+                res.forEach(d => mapped.push(new DataRow<TP>(d)));
+                if(this.sorting.length == 0){
+                    this.sorting = mapped[0].properties;
+                }
                 this.data = mapped;
             });
     }
