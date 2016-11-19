@@ -13,7 +13,7 @@ import {DataRow} from "./DataRow";
 
 export abstract class DataModel<TP extends IProjection,TM extends IModelEntity> implements IDataModel<TM> {
     private queryable: QNode;
-    protected projection: QNode;
+    private projection: QNode;
     private filters: Array<QNode>;
     private includes: string[];
     private sortingNodes: Map<string,QNode>;
@@ -26,10 +26,10 @@ export abstract class DataModel<TP extends IProjection,TM extends IModelEntity> 
             Type: NodeType.Querable,
             Value: modelEntry.constructor.name
         };
-        this.initProjection();
+        this.projection = this.configureProjection();
     }
 
-    abstract initProjection();
+    abstract configureProjection(): QNode;
 
     binding(p: ((x: TP)=> void), m: ((x: TM)=> void)): string {
         let property = this.convertLambdaToPath(p);

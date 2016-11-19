@@ -17,7 +17,7 @@ class DataModel {
             Type: QNode_1.NodeType.Querable,
             Value: modelEntry.constructor.name
         };
-        this.initProjection();
+        this.projection = this.configureProjection();
     }
     binding(p, m) {
         let property = this.convertLambdaToPath(p);

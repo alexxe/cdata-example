@@ -4,8 +4,7 @@ class ViewModel {
         this.model = model;
         this.filter = {};
         this.sorting = [];
-        this.filterMap = new Map();
-        this.initFilterMap();
+        this.filterMap = this.configureFilterMap();
     }
     applyFilterState() {
         let filters = Object.getOwnPropertyNames(this.filter);
