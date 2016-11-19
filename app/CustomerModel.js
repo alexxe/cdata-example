@@ -6,8 +6,8 @@ class CustomerModel extends DataModel_1.DataModel {
     constructor(http, url) {
         super(http, url, new ContactDto_1.ContactDto());
     }
-    initProjection() {
-        this.projection = {
+    configureProjection() {
+        let projection = {
             Type: QNode_1.NodeType.Method,
             Value: QNode_1.MethodType.Select,
             Right: {
@@ -27,6 +27,7 @@ class CustomerModel extends DataModel_1.DataModel {
                 }
             }
         };
+        return projection;
     }
 }
 exports.CustomerModel = CustomerModel;

@@ -1,6 +1,6 @@
 import {DataModel} from "../core/cdata/src/DataModel";
 import {Http} from "@angular/http";
-import {QNode, NodeType, MethodType, BinaryType} from "../core/cdata/src/QNode";
+import {QNode, NodeType, MethodType} from "../core/cdata/src/QNode";
 import {CustomerContactProjection} from "./model/CustomerContactProjection";
 import {ContactDto} from "./model/generated/ContactDto";
 
@@ -9,8 +9,8 @@ export class CustomerModel extends DataModel<CustomerContactProjection,ContactDt
         super(http,url,new ContactDto());
     }
 
-    initProjection() {
-        this.projection = {
+    configureProjection() : QNode {
+        let projection:QNode = {
             Type:NodeType.Method,
             Value:MethodType.Select,
             Right:{
@@ -30,6 +30,7 @@ export class CustomerModel extends DataModel<CustomerContactProjection,ContactDt
                 }
             }
         }
+        return projection;
     }
 
 

@@ -5,16 +5,18 @@ import {DataRow} from "./DataRow";
 
 export abstract class ViewModel<TP extends IProjection,TM extends IModelEntity>  {
     filter: any;
-    filterMap:Map<string,Function>;
     data:DataRow<TP>[];
     sorting: string[];
+
+    private filterMap:Map<string,Function>;
+
     constructor(protected model:IDataModel<TM>) {
         this.filter = {};
         this.sorting = [];
-        this.filterMap = new Map<string,Function>();
-        this.initFilterMap();
+        this.filterMap = this.configureFilterMap();
     }
-    protected abstract initFilterMap();
+
+    protected abstract configureFilterMap() : Map<string,Function>;
 
 
     private applyFilterState(){
