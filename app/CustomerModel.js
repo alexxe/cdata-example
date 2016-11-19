@@ -5,6 +5,8 @@ const ContactDto_1 = require("./model/generated/ContactDto");
 class CustomerModel extends DataModel_1.DataModel {
     constructor(http, url) {
         super(http, url, new ContactDto_1.ContactDto());
+    }
+    initProjection() {
         this.projection = {
             Type: QNode_1.NodeType.Method,
             Value: QNode_1.MethodType.Select,
@@ -16,10 +18,10 @@ class CustomerModel extends DataModel_1.DataModel {
                     Value: this.binding(x => x.nachname, x => x.lastName),
                     Left: {
                         Type: QNode_1.NodeType.Member,
-                        Value: this.binding(x => x.firma, x => x.customer.firma1),
+                        Value: this.binding(x => x.firma, x => x.customer.firma11),
                         Left: {
                             Type: QNode_1.NodeType.Member,
-                            Value: this.binding(x => x.firma1, x => x.customer.firma2)
+                            Value: this.binding(x => x.firma1, x => x.customer.firma21)
                         }
                     }
                 }

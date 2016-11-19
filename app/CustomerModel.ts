@@ -7,7 +7,9 @@ import {ContactDto} from "./model/generated/ContactDto";
 export class CustomerModel extends DataModel<CustomerContactProjection,ContactDto>{
     constructor(http: Http,url:string) {
         super(http,url,new ContactDto());
+    }
 
+    initProjection() {
         this.projection = {
             Type:NodeType.Method,
             Value:MethodType.Select,
@@ -19,10 +21,10 @@ export class CustomerModel extends DataModel<CustomerContactProjection,ContactDt
                     Value:this.binding(x => x.nachname,x => x.lastName),
                     Left:{
                         Type:NodeType.Member,
-                        Value:this.binding(x => x.firma,x => x.customer.firma1),
+                        Value:this.binding(x => x.firma,x => x.customer.firma11),
                         Left:{
                             Type:NodeType.Member,
-                            Value:this.binding(x => x.firma1,x => x.customer.firma2)
+                            Value:this.binding(x => x.firma1,x => x.customer.firma21)
                         }
                     }
                 }

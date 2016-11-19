@@ -1,8 +1,8 @@
-import {Projection} from "./Projection";
+import {IProjection} from "./IProjection";
 /**
  * Created by user on 11/17/2016.
  */
-export class DataRow<TP extends Projection> {
+export class DataRow<TP extends IProjection> {
     constructor(private source:TP) {
         this.values = [];
         this.properties = [];

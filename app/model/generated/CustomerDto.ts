@@ -8,9 +8,8 @@ export class CustomerDto implements IModelEntity {
 
     id: number;
     edvNr: number;
-    firma1: string;
-    firma2: string;
+    firma11: string;
+    firma21: string;
     street: string;
-    ort: string;
     contacts: ContactDto[];
 }

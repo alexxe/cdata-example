@@ -1,5 +1,5 @@
-import {Projection} from "../../core/cdata/src/Projection";
-export class CustomerContactProjection extends Projection{
+import {IProjection} from "../../core/cdata/src/IProjection";
+export class CustomerContactProjection implements IProjection{
     firma: string;
     firma1: string;
     name: string;

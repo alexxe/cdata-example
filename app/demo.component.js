@@ -15,36 +15,11 @@ const CustomerModel_1 = require("./CustomerModel");
 let DemoComponent = class DemoComponent {
     constructor(http) {
         this.http = http;
-        this.dataModel = new CustomerModel_1.CustomerModel(http, "http://localhost/Example.WebApi/api/Model/Default");
-        this.viewModel = new CustomerViewModel_1.CustomerViewModel(this.dataModel);
-        this.refresh();
-    }
-    get data() {
-        return this.dataModel.data;
-    }
-    get filter() {
-        return this.viewModel.filter;
-    }
-    get sorting() {
-        return this.dataModel.sorting;
-    }
-    refresh() {
-        this.viewModel.applyFilterState();
-        this.dataModel.refresh();
+        let dataModel = new CustomerModel_1.CustomerModel(http, "http://localhost/Example.WebApi/api/Model/Default");
+        this.viewModel = new CustomerViewModel_1.CustomerViewModel(dataModel);
+        this.viewModel.refresh();
     }
 };
-__decorate([
-    core_1.Input(), 
-    __metadata('design:type', Object)
-], DemoComponent.prototype, "data", null);
-__decorate([
-    core_1.Input(), 
-    __metadata('design:type', Object)
-], DemoComponent.prototype, "filter", null);
-__decorate([
-    core_1.Input(), 
-    __metadata('design:type', Object)
-], DemoComponent.prototype, "sorting", null);
 DemoComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
