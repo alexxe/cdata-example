@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Http} from "@angular/http";
 import {CustomerViewModel} from "./CustomerViewModel";
 import {CustomerModel} from "./CustomerModel";
-import {Projection} from "./../core/cdata/src/Projection";
+import {IProjection} from "../core/cdata/src/IProjection";
 
 
 @Component({
@@ -11,32 +11,16 @@ import {Projection} from "./../core/cdata/src/Projection";
 
 })
 export class DemoComponent {
-  public dataModel: CustomerModel;
   public viewModel: CustomerViewModel;
 
-  @Input()
-  get data() {
-    return this.dataModel.data;
-  }
 
-  @Input()
-  get filter() {
-    return this.viewModel.filter;
-  }
-  @Input()
-  get sorting() {
-    return this.dataModel.sorting;
-  }
   constructor(private http: Http) {
-    this.dataModel = new CustomerModel(http,"http://localhost/Example.WebApi/api/Model/Default");
-    this.viewModel = new CustomerViewModel(this.dataModel);
-    this.refresh();
+    let dataModel = new CustomerModel(http,"http://localhost/Example.WebApi/api/Model/Default");
+    this.viewModel = new CustomerViewModel(dataModel);
+    this.viewModel.refresh();
   }
 
-  public refresh() {
-    this.viewModel.applyFilterState();
-    this.dataModel.refresh();
-  }
+
 
 
 

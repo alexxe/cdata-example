@@ -41,7 +41,7 @@
     <div class="row">
         <div class="col-12">
             <div style="float: right">
-                <button md-raised-button color="primary" class="small" (click)="refresh()" type="button">SEARCH</button>
+                <button md-raised-button color="primary" class="small" (click)="viewModel.refresh()" type="button">SEARCH</button>
 
             </div>
         </div>
@@ -53,22 +53,15 @@
 <table class="table table-striped">
     <thead class="blue">
     <tr>
-        <th (click)="viewModel.sort('Id')">ID <span [class.sortAz]="viewModel.isSortedByAscending('Id')"
-                                                    [class.sortZa]="viewModel.isSortedByDescending('Id')"></span>
-        </th>
-        <th (click)="viewModel.sort('Name')">GENERAL.NAME <span
-                [class.sortAz]="viewModel.isSortedByAscending('Name')"
-                [class.sortZa]="viewModel.isSortedByDescending('Name')"></span></th>
-        <th (click)="viewModel.sort('Description')">GENERAL.DESCRIPTION <span
-                [class.sortAz]="viewModel.isSortedByAscending('Description')"
-                [class.sortZa]="viewModel.isSortedByDescending('Description')"></span></th>
+
+        <th *ngFor="let value of viewModel.sorting" (click)="viewModel.sort(value)">{{value}}</th>
+
+
     </tr>
     </thead>
     <tbody>
-    <tr >
-        <td *ngFor="let value of dataModel.sorting" (click)="viewModel.sort(value)">{{value}}</td>
-    </tr>
-    <tr *ngFor="let item of dataModel.data; let i = index;">
+
+    <tr *ngFor="let item of viewModel.data; let i = index;">
         <td *ngFor="let value of item.values">{{value}}</td>
     </tr>
 

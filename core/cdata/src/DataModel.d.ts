@@ -1,7 +1,7 @@
 import { Http } from "@angular/http";
 import { QNode } from "./QNode";
 import { BinaryType } from "./QNode";
-import { Projection } from "./Projection";
+import { Projection } from "./IProjection";
 import { IModelEntity } from "./IModelEntity";
 import { IDataModel } from "./IDataModel";
 export declare class DataModel<TP extends Projection, TM extends IModelEntity> implements IDataModel<TM> {
