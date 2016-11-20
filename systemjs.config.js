@@ -4,6 +4,7 @@
  */
 (function (global) {
     System.config({
+
         paths: {
             // paths serve as alias
             'npm:': 'node_modules/'
@@ -12,7 +13,6 @@
         map: {
             // our app is within the app folder
             app: 'app',
-            //table: 'core/table',
             core: 'core',
             // angular bundles
             '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
@@ -27,7 +27,7 @@
             // other libraries
             'rxjs':                       'npm:rxjs',
             'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
-            //'lodash':                     'npm:lodash/lodash.js'
+
 
 
 
@@ -38,10 +38,6 @@
                 main: './index.js',
                 defaultExtension: 'js'
             },
-            // table: {
-            //     main: './index.js',
-            //     defaultExtension: 'js'
-            // },
             core: {
                 main: './cdata/index.js',
                 defaultExtension: 'js'

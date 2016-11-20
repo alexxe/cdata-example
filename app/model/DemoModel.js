@@ -1,12 +1,15 @@
 "use strict";
-const DataModel_1 = require("../core/cdata/src/DataModel");
-const QNode_1 = require("../core/cdata/src/QNode");
-const ContactDto_1 = require("./model/generated/ContactDto");
-class CustomerModel extends DataModel_1.DataModel {
+const DataModel_1 = require("../../core/cdata/src/DataModel");
+const QNode_1 = require("../../core/cdata/src/QNode");
+class DemoModel extends DataModel_1.DataModel {
     constructor(http, url) {
-        super(http, url, new ContactDto_1.ContactDto());
+        super(http, url);
     }
-    configureProjection() {
+    getQuery() {
+        let query = {
+            Type: QNode_1.NodeType.Querable,
+            Value: ""
+        };
         let projection = {
             Type: QNode_1.NodeType.Method,
             Value: QNode_1.MethodType.Select,
@@ -27,8 +30,9 @@ class CustomerModel extends DataModel_1.DataModel {
                 }
             }
         };
+        projection.Left = query;
         return projection;
     }
 }
-exports.CustomerModel = CustomerModel;
-//# sourceMappingURL=CustomerModel.js.map
+exports.DemoModel = DemoModel;
+//# sourceMappingURL=DemoModel.js.map

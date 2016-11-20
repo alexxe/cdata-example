@@ -1,16 +1,15 @@
 import {IProjection} from "./IProjection";
 import {IDataModel} from "./IDataModel";
-import {IModelEntity} from "./IModelEntity";
 import {DataRow} from "./DataRow";
 
-export abstract class ViewModel<TP extends IProjection,TM extends IModelEntity>  {
+export abstract class ViewModel<TP extends IProjection>  {
     filter: any;
     data:DataRow<TP>[];
     sorting: string[];
 
     private filterMap:Map<string,Function>;
 
-    constructor(protected model:IDataModel<TM>) {
+    constructor(protected model:IDataModel<TP>) {
         this.filter = {};
         this.sorting = [];
         this.filterMap = this.configureFilterMap();

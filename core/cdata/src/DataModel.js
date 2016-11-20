@@ -7,17 +7,13 @@ const QNode_3 = require("./QNode");
 const QDescriptor_1 = require("./QDescriptor");
 const DataRow_1 = require("./DataRow");
 class DataModel {
-    constructor(http, url, modelEntry) {
+    constructor(http, url) {
         this.http = http;
         this.url = url;
         this.includes = [];
         this.filters = [];
         this.sortingNodes = new Map();
-        this.queryable = {
-            Type: QNode_1.NodeType.Querable,
-            Value: modelEntry.constructor.name
-        };
-        this.projection = this.configureProjection();
+        this.query = this.getQuery();
     }
     binding(p, m) {
         let property = this.convertLambdaToPath(p);
@@ -25,15 +21,6 @@ class DataModel {
         return property + ":" + path;
     }
     sort(property) {
-        let sort;
-        sort = {
-            Type: QNode_1.NodeType.Method,
-            Value: QNode_3.MethodType.OrderBy,
-            Right: {
-                Type: QNode_1.NodeType.Member,
-                Value: property
-            }
-        };
         if (this.sortingNodes.has(property)) {
             let node = this.sortingNodes.get(property);
             if (node.Value == QNode_3.MethodType.OrderBy) {
@@ -44,13 +31,19 @@ class DataModel {
             }
         }
         else {
-            this.sortingNodes.set(property, sort);
+            this.sortingNodes.set(property, {
+                Type: QNode_1.NodeType.Method,
+                Value: QNode_3.MethodType.OrderBy,
+                Right: {
+                    Type: QNode_1.NodeType.Member,
+                    Value: property
+                }
+            });
         }
         return this.refresh();
     }
     addFilter(path, op, value) {
-        let filter;
-        filter = {
+        this.filters.push({
             Type: QNode_1.NodeType.Binary,
             Value: op,
             Left: {
@@ -61,40 +54,34 @@ class DataModel {
                 Type: QNode_1.NodeType.Constant,
                 Value: value
             }
-        };
-        this.filters.push(filter);
+        });
     }
     buildQuery() {
-        let root = null;
+        let root = this.query;
         if (this.filters.length > 0) {
-            root = {
+            let where = {
                 Type: QNode_1.NodeType.Method,
                 Value: QNode_3.MethodType.Where,
-                Left: this.queryable
+                Left: this.query
             };
             for (var i = 0; i < this.filters.length; i++) {
                 let node = this.filters[i];
                 if (i == 0) {
-                    root.Right = node;
+                    where.Right = node;
                 }
                 else {
                     let binary = {
                         Type: QNode_1.NodeType.Binary,
                         Value: QNode_2.BinaryType.And,
-                        Left: root.Right,
+                        Left: where.Right,
                         Right: node
                     };
-                    root.Right = binary;
+                    where.Right = binary;
                 }
             }
+            where.Left = root;
+            root = where;
         }
-        if (root == null) {
-            this.projection.Left = this.queryable;
-        }
-        else {
-            this.projection.Left = root;
-        }
-        root = this.projection;
         for (let node of this.sortingNodes.values()) {
             node.Left = root;
             root = node;

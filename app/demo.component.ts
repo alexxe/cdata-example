@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Http} from "@angular/http";
-import {CustomerViewModel} from "./CustomerViewModel";
-import {CustomerModel} from "./CustomerModel";
+import {DemoViewModel} from "./DemoViewModel";
+import {DemoModel} from "./model/DemoModel";
 import {IProjection} from "../core/cdata/src/IProjection";
 
 
@@ -11,12 +11,12 @@ import {IProjection} from "../core/cdata/src/IProjection";
 
 })
 export class DemoComponent {
-  public viewModel: CustomerViewModel;
+  public viewModel: DemoViewModel;
 
 
   constructor(private http: Http) {
-    let dataModel = new CustomerModel(http,"http://localhost/Example.WebApi/api/Model/Default");
-    this.viewModel = new CustomerViewModel(dataModel);
+    let dataModel = new DemoModel(http,"http://localhost/Example.WebApi/api/crm/contact");
+    this.viewModel = new DemoViewModel(dataModel);
     this.viewModel.refresh();
   }
 

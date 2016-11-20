@@ -10,13 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require('@angular/core');
 const http_1 = require("@angular/http");
-const CustomerViewModel_1 = require("./CustomerViewModel");
-const CustomerModel_1 = require("./CustomerModel");
+const DemoViewModel_1 = require("./DemoViewModel");
+const DemoModel_1 = require("./model/DemoModel");
 let DemoComponent = class DemoComponent {
     constructor(http) {
         this.http = http;
-        let dataModel = new CustomerModel_1.CustomerModel(http, "http://localhost/Example.WebApi/api/Model/Default");
-        this.viewModel = new CustomerViewModel_1.CustomerViewModel(dataModel);
+        let dataModel = new DemoModel_1.DemoModel(http, "http://localhost/Example.WebApi/api/crm/contact");
+        this.viewModel = new DemoViewModel_1.DemoViewModel(dataModel);
         this.viewModel.refresh();
     }
 };

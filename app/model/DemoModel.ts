@@ -1,15 +1,19 @@
-import {DataModel} from "../core/cdata/src/DataModel";
+import {DataModel} from "../../core/cdata/src/DataModel";
 import {Http} from "@angular/http";
-import {QNode, NodeType, MethodType} from "../core/cdata/src/QNode";
-import {CustomerContactProjection} from "./model/CustomerContactProjection";
-import {ContactDto} from "./model/generated/ContactDto";
+import {QNode, NodeType, MethodType} from "../../core/cdata/src/QNode";
+import {DemoProjection} from "./DemoProjection";
+import {ContactDto} from "./generated/ContactDto";
 
-export class CustomerModel extends DataModel<CustomerContactProjection,ContactDto>{
+export class DemoModel extends DataModel<DemoProjection,ContactDto>{
     constructor(http: Http,url:string) {
-        super(http,url,new ContactDto());
+        super(http,url);
     }
 
-    configureProjection() : QNode {
+    getQuery() : QNode {
+        let query:QNode = {
+            Type: NodeType.Querable,
+            Value:""
+        };
         let projection:QNode = {
             Type:NodeType.Method,
             Value:MethodType.Select,
@@ -26,10 +30,12 @@ export class CustomerModel extends DataModel<CustomerContactProjection,ContactDt
                             Type:NodeType.Member,
                             Value:this.binding(x => x.firma1,x => x.customer.firma21)
                         }
+
                     }
                 }
             }
         }
+        projection.Left = query;
         return projection;
     }
 

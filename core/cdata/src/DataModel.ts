@@ -11,25 +11,20 @@ import {IDataModel} from "./IDataModel";
 import {DataRow} from "./DataRow";
 
 
-export abstract class DataModel<TP extends IProjection,TM extends IModelEntity> implements IDataModel<TM> {
-    private queryable: QNode;
-    private projection: QNode;
+export abstract class DataModel<TP extends IProjection,TM extends IModelEntity> implements IDataModel<TP> {
+    private query: QNode;
     private filters: Array<QNode>;
     private includes: string[];
     private sortingNodes: Map<string,QNode>;
 
-    constructor(private http: Http, private url: string, modelEntry: IModelEntity) {
+    constructor(private http: Http, private url: string) {
         this.includes = [];
         this.filters = [];
         this.sortingNodes = new Map<string,QNode>();
-        this.queryable = {
-            Type: NodeType.Querable,
-            Value: modelEntry.constructor.name
-        };
-        this.projection = this.configureProjection();
+        this.query = this.getQuery();
     }
 
-    abstract configureProjection(): QNode;
+    abstract getQuery(): QNode;
 
     binding(p: ((x: TP)=> void), m: ((x: TM)=> void)): string {
         let property = this.convertLambdaToPath(p);
@@ -38,15 +33,6 @@ export abstract class DataModel<TP extends IProjection,TM extends IModelEntity> 
     }
 
     sort(property: string) : Observable<DataRow<TP>[]>{
-        let sort: QNode;
-        sort = {
-            Type: NodeType.Method,
-            Value: MethodType.OrderBy,
-            Right: {
-                Type: NodeType.Member,
-                Value: property
-            }
-        }
         if (this.sortingNodes.has(property)) {
             let node = this.sortingNodes.get(property);
             if (node.Value == MethodType.OrderBy) {
@@ -57,14 +43,20 @@ export abstract class DataModel<TP extends IProjection,TM extends IModelEntity> 
 
         }
         else {
-            this.sortingNodes.set(property, sort);
+            this.sortingNodes.set(property, {
+                Type: NodeType.Method,
+                Value: MethodType.OrderBy,
+                Right: {
+                    Type: NodeType.Member,
+                    Value: property
+                }
+            });
         }
         return this.refresh();
     }
 
-    addFilter(path: (x: TM) => any, op: BinaryType, value: any) {
-        let filter: QNode;
-        filter = {
+    addFilter(path: (x: TP) => any, op: BinaryType, value: any) {
+        this.filters.push({
             Type: NodeType.Binary,
             Value: op,
             Left: {
@@ -75,44 +67,35 @@ export abstract class DataModel<TP extends IProjection,TM extends IModelEntity> 
                 Type: NodeType.Constant,
                 Value: value
             }
-        };
-        this.filters.push(filter);
+        });
     }
 
     private buildQuery(): QNode {
-        let root: QNode = null;
+        let root:QNode = this.query;
         if (this.filters.length > 0) {
-            root = {
+            let where:QNode = {
                 Type: NodeType.Method,
                 Value: MethodType.Where,
-                Left: this.queryable
+                Left: this.query
             };
             for (var i = 0; i < this.filters.length; i++) {
                 let node = this.filters[i];
                 if (i == 0) {
-                    root.Right = node;
+                    where.Right = node;
                 }
                 else {
                     let binary: QNode = {
                         Type: NodeType.Binary,
                         Value: BinaryType.And,
-                        Left: root.Right,
+                        Left: where.Right,
                         Right: node
                     };
-                    root.Right = binary;
+                    where.Right = binary;
                 }
-
             }
+            where.Left = root;
+            root = where;
         }
-
-        if (root == null) {
-            this.projection.Left = this.queryable;
-        }
-        else {
-            this.projection.Left = root;
-        }
-        root = this.projection;
-
 
         for (let node of this.sortingNodes.values()) {
             node.Left = root;
